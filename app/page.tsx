@@ -1,103 +1,128 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { ArrowRight, Bitcoin, Search, Building, Ship, Car } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { HeroCalculator } from '@/components/HeroCalculator'
+import { FeaturedPropertiesSection } from '@/components/FeaturedPropertiesSection'
+import { getTopCoins } from '@/lib/coingecko'
+import { HeroSlideshow } from '@/components/HeroSlideshow'
+import { getFeaturedProperties } from '@/lib/queries/properties'
 
-export default function Home() {
+async function getCoins() {
+  try {
+    return await getTopCoins()
+  } catch (error) {
+    console.error('Error fetching coins:', error)
+    return []
+  }
+}
+
+export default async function HomePage() {
+  const [featuredProperties, coins] = await Promise.all([
+    getFeaturedProperties(),
+    getCoins()
+  ])
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
+        {/* Background Image Slideshow with Overlay */}
+        <HeroSlideshow />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <Badge className="mb-6 bg-primary/10 text-primary hover:bg-primary/20 border-primary/30 shadow-[0_0_20px_-5px_rgba(212,175,55,0.4)]">
+              <Bitcoin className="h-3 w-3 mr-1" />
+              Crypto Payments Accepted
+            </Badge>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(212,175,55,0.5)]">
+              Dubai&apos;s #1 Crypto Real Estate Platform
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8">
+              Invest in luxury properties, rent supercars & yachts with Bitcoin, Ethereum, or USDT
+            </p>
+
+            {/* Quick Crypto Calculator */}
+            <HeroCalculator coins={coins} />
+
+            {/* Search Bar */}
+            <div className="inline-block bg-card/50 backdrop-blur-md border border-primary/30 rounded-xl p-4 shadow-[0_0_25px_-5px_rgba(212,175,55,0.3)] w-[600px] max-w-full">
+              <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2 bg-background/80 backdrop-blur rounded-lg px-3 py-2 border-primary/20 flex-1">
+                  <Search className="h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search by location (e.g. Dubai Marina)"
+                    className="border-0 focus-visible:ring-0 px-0 flex-1"
+                  />
+                </div>
+                <Button asChild size="sm">
+                  <Link href="/properties">
+                    Search <ArrowRight className="ml-1 h-3 w-3" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Quick Links */}
+      <section className="py-12 border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link href="/properties" className="group">
+              <Card className="hover:border-primary transition-colors">
+                <CardContent className="p-6 flex items-center gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <Building className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Properties</h3>
+                    <p className="text-sm text-muted-foreground">Villas, Apartments & More</p>
+                  </div>
+                  <ArrowRight className="ml-auto h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/yachts" className="group">
+              <Card className="hover:border-primary transition-colors">
+                <CardContent className="p-6 flex items-center gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <Ship className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Yachts</h3>
+                    <p className="text-sm text-muted-foreground">Luxury Yacht Rentals</p>
+                  </div>
+                  <ArrowRight className="ml-auto h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/supercars" className="group">
+              <Card className="hover:border-primary transition-colors">
+                <CardContent className="p-6 flex items-center gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <Car className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Supercars</h3>
+                    <p className="text-sm text-muted-foreground">Exotic Car Rentals</p>
+                  </div>
+                  <ArrowRight className="ml-auto h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Properties */}
+      <FeaturedPropertiesSection properties={featuredProperties} coins={coins} />
     </div>
-  );
+  )
 }
