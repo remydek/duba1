@@ -329,7 +329,7 @@ export const dummyEvents: Event[] = [
     venue: 'White Dubai',
     location: 'Dubai',
     category: 'Nightlife',
-    images: ['https://images.unsplash.com/photo-1571266028243-d220c6ce8d0c?w=800&q=80'],
+    images: ['https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80'],
     tickets_available: 300,
     source: 'PlatinumList',
     created_at: new Date().toISOString(),

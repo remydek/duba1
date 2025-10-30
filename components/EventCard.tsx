@@ -31,12 +31,14 @@ export function EventCard({ event }: EventCardProps) {
 
   return (
     <Card className="overflow-hidden hover:border-primary transition-colors group">
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative h-64 w-full overflow-hidden bg-muted">
         <Image
           src={event.images?.[0] || '/placeholder.jpg'}
           alt={event.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={false}
         />
         {event.category && (
           <Badge className="absolute top-3 right-3 bg-primary/90 backdrop-blur-sm">
