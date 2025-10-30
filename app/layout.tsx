@@ -16,8 +16,9 @@ const gantari = Gantari({
 });
 
 export const metadata: Metadata = {
-  title: "DUBA1 - Dubai's #1 Crypto Real Estate Platform",
-  description: "Invest in luxury properties, rent supercars & yachts with Bitcoin, Ethereum, or USDT. Dubai's premier crypto-friendly real estate aggregator.",
+  title: "DUBA1 - Dubai's Crypto Luxury Lifestyle",
+  description: "Book Dubai events, rent luxury villas, supercar rentals, and yacht experiences with cryptocurrency. See prices in BTC, ETH, USDT & more. The #1 platform for crypto holders in Dubai.",
+  keywords: ["Dubai crypto", "luxury lifestyle Dubai", "crypto payments", "Bitcoin Dubai", "Ethereum payments", "supercar rental crypto", "yacht rental Dubai", "luxury events Dubai", "crypto lifestyle", "USDT payments"],
 };
 
 export default function RootLayout({

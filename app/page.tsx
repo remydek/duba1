@@ -48,10 +48,10 @@ export default async function HomePage() {
               Crypto Payments Accepted
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(212,175,55,0.5)]">
-              Dubai&apos;s #1 Crypto Real Estate Platform
+              Dubai&apos;s Crypto Luxury Lifestyle
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              Invest in luxury properties, rent supercars & yachts with Bitcoin, Ethereum, or USDT
+              Events • Properties • Supercars • Yachts
             </p>
 
             {/* Quick Crypto Calculator */}

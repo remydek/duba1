@@ -13,7 +13,7 @@ export function Footer() {
               <span className="text-2xl font-bold text-primary">DUBA1</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Dubai&apos;s #1 Crypto Real Estate Platform
+              Dubai&apos;s Crypto Luxury Lifestyle
             </p>
             <div className="flex space-x-4 mt-4">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
@@ -42,10 +42,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Lifestyle */}
           <div>
-            <h3 className="font-semibold mb-4 text-foreground">Services</h3>
+            <h3 className="font-semibold mb-4 text-foreground">Lifestyle</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
+              <li><Link href="/events" className="hover:text-primary transition-colors">Exclusive Events</Link></li>
               <li><Link href="/yachts" className="hover:text-primary transition-colors">Yacht Rentals</Link></li>
               <li><Link href="/supercars" className="hover:text-primary transition-colors">Supercar Rentals</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Golden Visa</Link></li>
