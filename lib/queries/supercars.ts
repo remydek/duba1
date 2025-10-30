@@ -56,3 +56,11 @@ export async function searchSupercars(query: string): Promise<Supercar[]> {
 
   return data || []
 }
+
+/**
+ * Fetch featured supercars (first 3)
+ */
+export async function getFeaturedSupercars(): Promise<Supercar[]> {
+  const supercars = await getSupercars()
+  return supercars.slice(0, 3)
+}

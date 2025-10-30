@@ -1,14 +1,20 @@
 import Link from 'next/link'
-import { ArrowRight, Bitcoin, Search, Building, Ship, Car } from 'lucide-react'
+import { ArrowRight, Bitcoin, Search, Building, Ship, Car, Ticket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { HeroCalculator } from '@/components/HeroCalculator'
 import { FeaturedPropertiesSection } from '@/components/FeaturedPropertiesSection'
+import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
+import { FeaturedSupercarsSection } from '@/components/FeaturedSupercarsSection'
+import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
 import { getTopCoins } from '@/lib/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
 import { getFeaturedProperties } from '@/lib/queries/properties'
+import { getFeaturedEvents } from '@/lib/queries/events'
+import { getFeaturedSupercars } from '@/lib/queries/supercars'
+import { getFeaturedYachts } from '@/lib/queries/yachts'
 
 async function getCoins() {
   try {
@@ -20,8 +26,11 @@ async function getCoins() {
 }
 
 export default async function HomePage() {
-  const [featuredProperties, coins] = await Promise.all([
+  const [featuredProperties, featuredEvents, featuredSupercars, featuredYachts, coins] = await Promise.all([
     getFeaturedProperties(),
+    getFeaturedEvents(),
+    getFeaturedSupercars(),
+    getFeaturedYachts(),
     getCoins()
   ])
 
@@ -72,7 +81,22 @@ export default async function HomePage() {
       {/* Quick Links */}
       <section className="py-12 border-y border-border">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link href="/events" className="group">
+              <Card className="hover:border-primary transition-colors">
+                <CardContent className="p-6 flex items-center gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <Ticket className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Events</h3>
+                    <p className="text-sm text-muted-foreground">Exclusive Experiences</p>
+                  </div>
+                  <ArrowRight className="ml-auto h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </CardContent>
+              </Card>
+            </Link>
+
             <Link href="/properties" className="group">
               <Card className="hover:border-primary transition-colors">
                 <CardContent className="p-6 flex items-center gap-4">
@@ -82,21 +106,6 @@ export default async function HomePage() {
                   <div>
                     <h3 className="font-semibold">Properties</h3>
                     <p className="text-sm text-muted-foreground">Villas, Apartments & More</p>
-                  </div>
-                  <ArrowRight className="ml-auto h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                </CardContent>
-              </Card>
-            </Link>
-
-            <Link href="/yachts" className="group">
-              <Card className="hover:border-primary transition-colors">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Ship className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Yachts</h3>
-                    <p className="text-sm text-muted-foreground">Luxury Yacht Rentals</p>
                   </div>
                   <ArrowRight className="ml-auto h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 </CardContent>
@@ -117,12 +126,36 @@ export default async function HomePage() {
                 </CardContent>
               </Card>
             </Link>
+
+            <Link href="/yachts" className="group">
+              <Card className="hover:border-primary transition-colors">
+                <CardContent className="p-6 flex items-center gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <Ship className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Yachts</h3>
+                    <p className="text-sm text-muted-foreground">Luxury Yacht Rentals</p>
+                  </div>
+                  <ArrowRight className="ml-auto h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </CardContent>
+              </Card>
+            </Link>
           </div>
         </div>
       </section>
 
+      {/* Featured Events */}
+      <FeaturedEventsSection events={featuredEvents} />
+
+      {/* Featured Supercars */}
+      <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
+
       {/* Featured Properties */}
       <FeaturedPropertiesSection properties={featuredProperties} coins={coins} />
+
+      {/* Featured Yachts */}
+      <FeaturedYachtsSection yachts={featuredYachts} coins={coins} />
     </div>
   )
 }

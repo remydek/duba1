@@ -199,6 +199,50 @@ export interface Database {
           updated_at?: string | null
         }
       }
+      events: {
+        Row: {
+          id: string
+          title: string
+          description: string | null
+          price_aed: number
+          event_date: string
+          venue: string | null
+          location: string | null
+          category: string | null
+          images: string[] | null
+          tickets_available: number | null
+          source: string | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string | null
+          price_aed: number
+          event_date: string
+          venue?: string | null
+          location?: string | null
+          category?: string | null
+          images?: string[] | null
+          tickets_available?: number | null
+          source?: string | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string | null
+          price_aed?: number
+          event_date?: string
+          venue?: string | null
+          location?: string | null
+          category?: string | null
+          images?: string[] | null
+          tickets_available?: number | null
+          source?: string | null
+          created_at?: string | null
+        }
+      }
     }
   }
 }
@@ -208,3 +252,4 @@ export type Yacht = Database['public']['Tables']['yachts']['Row']
 export type Supercar = Database['public']['Tables']['supercars']['Row']
 export type Lead = Database['public']['Tables']['leads']['Row']
 export type CryptoPrice = Database['public']['Tables']['crypto_prices']['Row']
+export type Event = Database['public']['Tables']['events']['Row']

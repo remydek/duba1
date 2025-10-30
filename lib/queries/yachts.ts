@@ -56,3 +56,11 @@ export async function searchYachts(query: string): Promise<Yacht[]> {
 
   return data || []
 }
+
+/**
+ * Fetch featured yachts (first 3)
+ */
+export async function getFeaturedYachts(): Promise<Yacht[]> {
+  const yachts = await getYachts()
+  return yachts.slice(0, 3)
+}
