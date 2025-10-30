@@ -1,16 +1,27 @@
+'use client'
+
 import Link from 'next/link'
-import { Building2, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
+import Image from 'next/image'
+import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
+import { useTheme } from '@/components/ThemeProvider'
 
 export function Footer() {
+  const { theme } = useTheme()
+
   return (
     <footer className="border-t border-border bg-card mt-20">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <Building2 className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">DUBA1</span>
+            <Link href="/" className="flex items-center mb-4">
+              <Image
+                src={theme === 'dark' ? '/dark-theme-logo.svg' : '/light-theme-logo.svg'}
+                alt="DUBA1"
+                height={32}
+                width={100}
+                className="h-8 w-auto"
+              />
             </Link>
             <p className="text-sm text-muted-foreground">
               Dubai&apos;s Crypto Luxury Lifestyle

@@ -1,13 +1,16 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
-import { Menu, X, Building2 } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeSwitcher } from '@/components/ThemeSwitcher'
+import { useTheme } from '@/components/ThemeProvider'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const { theme } = useTheme()
 
   const navLinks = [
     { href: '/events', label: 'Events' },
@@ -21,9 +24,15 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <Building2 className="h-8 w-8 text-primary drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)] transition-all" />
-            <span className="text-2xl font-bold text-primary drop-shadow-[0_0_8px_rgba(212,175,55,0.5)] group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.7)] transition-all">DUBA1</span>
+          <Link href="/" className="flex items-center group relative">
+            <Image
+              src={theme === 'dark' ? '/dark-theme-logo.svg' : '/light-theme-logo.svg'}
+              alt="DUBA1"
+              height={40}
+              width={120}
+              className="h-10 w-auto transition-all group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)]"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
