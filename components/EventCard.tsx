@@ -30,7 +30,7 @@ export function EventCard({ event }: EventCardProps) {
   }).format(event.price_aed)
 
   return (
-    <Card className="overflow-hidden hover:border-primary transition-colors group">
+    <Card className="overflow-hidden hover:border-primary transition-colors group p-0">
       <div className="relative h-64 w-full overflow-hidden bg-muted">
         <Image
           src={event.images?.[0] || '/placeholder.jpg'}
