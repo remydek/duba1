@@ -8,6 +8,15 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 
+type SupercarSpecs = {
+  engine?: string
+  horsepower?: number
+  topSpeed?: string
+  acceleration?: string
+  transmission?: string
+  type?: string
+}
+
 export default function DummyDataPage() {
   const [showProperties, setShowProperties] = useState(true)
   const [showYachts, setShowYachts] = useState(false)
@@ -47,7 +56,7 @@ export default function DummyDataPage() {
                   {/* Image */}
                   <div className="relative h-48 w-full">
                     <Image
-                      src={property.images[0]}
+                      src={property.images?.[0] || '/placeholder.jpg'}
                       alt={property.title}
                       fill
                       className="object-cover"
@@ -75,15 +84,15 @@ export default function DummyDataPage() {
                       <p>📍 {property.area}</p>
                       <p>🏗️ {property.developer}</p>
                       <p>🛏️ {property.bedrooms} Bed • 🚿 {property.bathrooms} Bath</p>
-                      <p>📐 {property.sqft.toLocaleString()} sqft</p>
+                      <p>📐 {property.sqft?.toLocaleString()} sqft</p>
                       <p>🏠 Type: {property.property_type}</p>
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {property.amenities.slice(0, 3).map((amenity) => (
+                        {property.amenities?.slice(0, 3).map((amenity) => (
                           <Badge key={amenity} variant="outline" className="text-xs">
                             {amenity}
                           </Badge>
                         ))}
-                        {property.amenities.length > 3 && (
+                        {property.amenities && property.amenities.length > 3 && (
                           <Badge variant="outline" className="text-xs">
                             +{property.amenities.length - 3} more
                           </Badge>
@@ -121,7 +130,7 @@ export default function DummyDataPage() {
                   {/* Image */}
                   <div className="relative h-48 w-full">
                     <Image
-                      src={yacht.images[0]}
+                      src={yacht.images?.[0] || '/placeholder.jpg'}
                       alt={yacht.name}
                       fill
                       className="object-cover"
@@ -143,12 +152,12 @@ export default function DummyDataPage() {
                       <p>👥 Max Guests: {yacht.guests_max}</p>
                       <p>📱 WhatsApp: {yacht.whatsapp_booking}</p>
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {yacht.amenities.slice(0, 3).map((amenity) => (
+                        {yacht.amenities?.slice(0, 3).map((amenity) => (
                           <Badge key={amenity} variant="outline" className="text-xs">
                             {amenity}
                           </Badge>
                         ))}
-                        {yacht.amenities.length > 3 && (
+                        {yacht.amenities && yacht.amenities.length > 3 && (
                           <Badge variant="outline" className="text-xs">
                             +{yacht.amenities.length - 3} more
                           </Badge>
@@ -186,7 +195,7 @@ export default function DummyDataPage() {
                   {/* Image */}
                   <div className="relative h-64 w-full">
                     <Image
-                      src={car.images[0]}
+                      src={car.images?.[0] || '/placeholder.jpg'}
                       alt={`${car.brand} ${car.model}`}
                       fill
                       className="object-cover"
@@ -207,25 +216,25 @@ export default function DummyDataPage() {
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div className="space-y-2">
                         <p className="text-muted-foreground">
-                          <span className="font-medium">Engine:</span> {car.specs.engine}
+                          <span className="font-medium">Engine:</span> {(car.specs as SupercarSpecs)?.engine}
                         </p>
                         <p className="text-muted-foreground">
-                          <span className="font-medium">Power:</span> {car.specs.horsepower} HP
+                          <span className="font-medium">Power:</span> {(car.specs as SupercarSpecs)?.horsepower} HP
                         </p>
                         <p className="text-muted-foreground">
-                          <span className="font-medium">Top Speed:</span> {car.specs.topSpeed}
+                          <span className="font-medium">Top Speed:</span> {(car.specs as SupercarSpecs)?.topSpeed}
                         </p>
                       </div>
                       <div className="space-y-2">
                         <p className="text-muted-foreground">
-                          <span className="font-medium">0-100:</span> {car.specs.acceleration}
+                          <span className="font-medium">0-100:</span> {(car.specs as SupercarSpecs)?.acceleration}
                         </p>
                         <p className="text-muted-foreground">
-                          <span className="font-medium">Trans:</span> {car.specs.transmission}
+                          <span className="font-medium">Trans:</span> {(car.specs as SupercarSpecs)?.transmission}
                         </p>
-                        {car.specs.type && (
+                        {(car.specs as SupercarSpecs)?.type && (
                           <p className="text-muted-foreground">
-                            <span className="font-medium">Type:</span> {car.specs.type}
+                            <span className="font-medium">Type:</span> {(car.specs as SupercarSpecs)?.type}
                           </p>
                         )}
                       </div>
@@ -257,8 +266,8 @@ export default function DummyDataPage() {
               <p className="font-medium mb-2">Yachts:</p>
               <ul className="space-y-1 text-muted-foreground">
                 <li>• Total: {dummyYachts.length} available</li>
-                <li>• Size Range: {Math.min(...dummyYachts.map(y => y.length_ft))}ft - {Math.max(...dummyYachts.map(y => y.length_ft))}ft</li>
-                <li>• Guest Capacity: {Math.min(...dummyYachts.map(y => y.guests_max))} - {Math.max(...dummyYachts.map(y => y.guests_max))} people</li>
+                <li>• Size Range: {Math.min(...dummyYachts.map(y => y.length_ft || 0))}ft - {Math.max(...dummyYachts.map(y => y.length_ft || 0))}ft</li>
+                <li>• Guest Capacity: {Math.min(...dummyYachts.map(y => y.guests_max || 0))} - {Math.max(...dummyYachts.map(y => y.guests_max || 0))} people</li>
                 <li>• Daily Rate: {formatAED(Math.min(...dummyYachts.map(y => y.price_per_day_aed)))} - {formatAED(Math.max(...dummyYachts.map(y => y.price_per_day_aed)))}</li>
               </ul>
             </div>
@@ -267,7 +276,7 @@ export default function DummyDataPage() {
               <ul className="space-y-1 text-muted-foreground">
                 <li>• Total: {dummySupercars.length} cars</li>
                 <li>• Brands: {[...new Set(dummySupercars.map(c => c.brand))].join(', ')}</li>
-                <li>• Max HP: {Math.max(...dummySupercars.map(c => c.specs.horsepower))} HP</li>
+                <li>• Max HP: {Math.max(...dummySupercars.map(c => (c.specs as SupercarSpecs)?.horsepower || 0))} HP</li>
                 <li>• Daily Rate: {formatAED(Math.min(...dummySupercars.map(c => c.price_per_day_aed)))} - {formatAED(Math.max(...dummySupercars.map(c => c.price_per_day_aed)))}</li>
               </ul>
             </div>
