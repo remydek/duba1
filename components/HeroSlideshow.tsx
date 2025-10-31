@@ -35,15 +35,15 @@ export function HeroSlideshow() {
             src={image}
             alt={`Dubai scene ${index + 1}`}
             fill
-            className="object-cover opacity-80"
+            className="object-cover"
             priority={index === 0}
             sizes="100vw"
           />
         </div>
       ))}
       {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/90"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-background/10 via-transparent to-background/10"></div>
     </div>
   )
 }
