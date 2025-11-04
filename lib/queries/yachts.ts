@@ -2,6 +2,8 @@ import { supabase } from '../supabase'
 import type { Yacht } from '@/types/database'
 import { dummyYachts } from '../dummy-data'
 
+
+// TODO: Make Service Layer and Route Api for Obsecurity
 /**
  * Fetch all yachts from Supabase
  */
