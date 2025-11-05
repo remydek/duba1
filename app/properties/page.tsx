@@ -1,6 +1,6 @@
 import { getTopCoins } from '@/lib/coingecko'
 import { PropertiesClient } from './PropertiesClient'
-import { getProperties } from '@/lib/queries/properties'
+import { getProperties } from '@/services/properties'
 
 async function getCoins() {
   try {

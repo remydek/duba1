@@ -1,6 +1,6 @@
-import { supabase } from '../supabase'
+import { supabase } from '@/lib/supabase'
 import type { Event } from '@/schemas/event'
-import { dummyEvents } from '../dummy-data'
+import { dummyEvents } from '@/lib/dummy-data'
 
 /**
  * Fetch all events from Supabase

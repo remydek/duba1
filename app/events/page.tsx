@@ -1,7 +1,7 @@
 import { Ticket, Calendar, TrendingUp } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EventCard } from '@/components/EventCard'
-import { getEvents, getTodayEvents, getThisWeekEvents } from '@/lib/queries/events'
+import { getEvents, getTodayEvents, getThisWeekEvents } from '@/services/events'
 
 export default async function EventsPage() {
   const [allEvents, todayEvents, weekEvents] = await Promise.all([

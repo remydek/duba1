@@ -11,10 +11,10 @@ import { FeaturedSupercarsSection } from '@/components/FeaturedSupercarsSection'
 import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
 import { getTopCoins } from '@/lib/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
-import { getFeaturedProperties } from '@/lib/queries/properties'
-import { getFeaturedEvents } from '@/lib/queries/events'
-import { getFeaturedSupercars } from '@/lib/queries/supercars'
-import { getFeaturedYachts } from '@/lib/queries/yachts'
+import { getFeaturedProperties } from '@/services/properties'
+import { getFeaturedEvents } from '@/services/events'
+import { getFeaturedSupercars } from '@/services/supercars'
+import { getFeaturedYachts } from '@/services/yachts'
 
 async function getCoins() {
   try {

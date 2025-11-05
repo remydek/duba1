@@ -16,7 +16,7 @@ import {
   ArrowLeft,
   MessageCircle,
 } from 'lucide-react'
-import { getPropertyById } from '@/lib/queries/properties'
+import { getPropertyById } from '@/services/properties'
 
 export default async function PropertyDetailPage({
   params,

@@ -24,7 +24,9 @@ export async function getTopCoins(): Promise<CoinGeckoData[]> {
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=aed&order=market_cap_desc&per_page=100&page=1&sparkline=false',
       { next: { revalidate: 300 } } // Cache for 5 minutes
     )
-
+    console.error("=================================")
+    console.error(response.headers.get('x-nextjs-cache'))
+    console.error("=================================")
     if (!response.ok) {
       throw new Error('Failed to fetch coin data')
     }

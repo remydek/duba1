@@ -1,6 +1,6 @@
-import { supabase } from '../supabase'
+import { supabase } from '@/lib/supabase'
 import type { Property } from '@/schemas/property'
-import { dummyProperties } from '../dummy-data'
+import { dummyProperties } from '@/lib/dummy-data'
 
 /**
  * Fetch all properties from Supabase
