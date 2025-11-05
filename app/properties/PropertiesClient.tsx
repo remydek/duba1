@@ -8,7 +8,7 @@ import { Search, SlidersHorizontal } from 'lucide-react'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import { PageCoinSelector } from '@/components/PageCoinSelector'
 import type { Property } from '@/schemas/property'
-import type { CoinGeckoData } from '@/lib/coingecko'
+import type { CoinGeckoData } from '@/services/coingecko'
 
 interface PropertiesClientProps {
   properties: Property[]

@@ -1,4 +1,4 @@
-import { getTopCoins } from '@/lib/coingecko'
+import { getTopCoins } from '@/services/coingecko'
 import { SearchClient } from './SearchClient'
 import { getProperties } from '@/services/properties'
 import { getYachts } from '@/services/yachts'

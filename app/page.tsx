@@ -9,7 +9,7 @@ import { FeaturedPropertiesSection } from '@/components/FeaturedPropertiesSectio
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
 import { FeaturedSupercarsSection } from '@/components/FeaturedSupercarsSection'
 import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
-import { getTopCoins } from '@/lib/coingecko'
+import { getTopCoins } from '@/services/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
 import { getFeaturedProperties } from '@/services/properties'
 import { getFeaturedEvents } from '@/services/events'

@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import type { Yacht } from '@/schemas/yacht'
-import { dummyYachts } from '@/lib/dummy-data'
+import { dummyYachts } from '@/fixtures/dummy-data'
 
 
 // TODO: Make Service Layer and Route Api for Obsecurity

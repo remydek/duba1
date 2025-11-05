@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import type { Supercar } from '@/schemas/supercar'
-import { dummySupercars } from '@/lib/dummy-data'
+import { dummySupercars } from '@/fixtures/dummy-data'
 
 /**
  * Fetch all supercars from Supabase

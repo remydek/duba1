@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { YachtCard } from '@/components/YachtCard'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import type { Yacht } from '@/schemas/yacht'
-import type { CoinGeckoData } from '@/lib/coingecko'
+import type { CoinGeckoData } from '@/services/coingecko'
 
 interface FeaturedYachtsSectionProps {
   yachts: Yacht[]

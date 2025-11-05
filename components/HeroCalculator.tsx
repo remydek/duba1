@@ -5,10 +5,10 @@ import { ArrowRight, Building, Ship, Car } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { CoinSelector } from '@/components/CoinSelector'
-import { CoinGeckoData } from '@/lib/coingecko'
-import { formatAED } from '@/lib/crypto'
+import { CoinGeckoData } from '@/services/coingecko'
+import { formatAED } from '@/services/crypto'
 import { useRouter } from 'next/navigation'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 
 interface HeroCalculatorProps {
   coins: CoinGeckoData[]

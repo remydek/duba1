@@ -9,7 +9,7 @@ This application is currently running with **dummy data** instead of a live Supa
 - URL: `https://dummy-project.supabase.co`
 - Key: Mock JWT token
 
-### 2. Dummy Data File (`lib/dummy-data.ts`)
+### 2. Dummy Data File (`fixtures/dummy-data.ts`)
 Contains sample data for:
 - **Properties** (6 luxury properties in Dubai)
 - **Yachts** (3 luxury yachts)

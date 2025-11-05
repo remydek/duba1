@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { formatAED } from '@/lib/crypto'
-import { convertAED, formatCurrency, convertToCrypto, formatCryptoAmount, EXCHANGE_RATES } from '@/lib/currency'
+import { formatAED } from '@/services/crypto'
+import { convertAED, formatCurrency, convertToCrypto, formatCryptoAmount, EXCHANGE_RATES } from '@/services/currency'
 import { useCurrency } from '@/contexts/CurrencyContext'
 
 interface PriceDisplayProps {
