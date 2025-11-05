@@ -1,5 +1,5 @@
 import { supabase } from '../supabase'
-import type { Yacht } from '@/types/database'
+import type { Yacht } from '@/schemas/yacht'
 import { dummyYachts } from '../dummy-data'
 
 

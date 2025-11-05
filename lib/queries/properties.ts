@@ -1,5 +1,5 @@
 import { supabase } from '../supabase'
-import type { Property } from '@/types/database'
+import type { Property } from '@/schemas/property'
 import { dummyProperties } from '../dummy-data'
 
 /**

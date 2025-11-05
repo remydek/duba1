@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Search, Car } from 'lucide-react'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import { PageCoinSelector } from '@/components/PageCoinSelector'
-import type { Supercar } from '@/types/database'
+import type { Supercar } from '@/schemas/supercar'
 import type { CoinGeckoData } from '@/lib/coingecko'
 
 interface SupercarsClientProps {

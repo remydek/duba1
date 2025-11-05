@@ -7,7 +7,7 @@ import { Ship, Users } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PriceDisplay } from '@/components/PriceDisplay'
-import type { Yacht } from '@/types/database'
+import type { Yacht } from '@/schemas/yacht'
 
 export function YachtCard({ yacht }: { yacht: Yacht }) {
   const [isHovering, setIsHovering] = useState(false)

@@ -1,5 +1,5 @@
 import { supabase } from '../supabase'
-import type { Supercar } from '@/types/database'
+import type { Supercar } from '@/schemas/supercar'
 import { dummySupercars } from '../dummy-data'
 
 /**

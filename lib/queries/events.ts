@@ -1,5 +1,5 @@
 import { supabase } from '../supabase'
-import type { Event } from '@/types/database'
+import type { Event } from '@/schemas/event'
 import { dummyEvents } from '../dummy-data'
 
 /**

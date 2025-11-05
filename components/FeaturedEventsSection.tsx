@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { EventCard } from '@/components/EventCard'
-import type { Event } from '@/types/database'
+import type { Event } from '@/schemas/event'
 
 interface FeaturedEventsSectionProps {
   events: Event[]

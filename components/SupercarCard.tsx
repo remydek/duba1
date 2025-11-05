@@ -7,7 +7,7 @@ import { Car, Zap } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PriceDisplay } from '@/components/PriceDisplay'
-import type { Supercar } from '@/types/database'
+import type { Supercar } from '@/schemas/supercar'
 
 type SupercarSpecs = {
   engine?: string
