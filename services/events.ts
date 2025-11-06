@@ -1,35 +1,38 @@
 import { supabase } from '@/lib/supabase'
 import type { Event } from '@/schemas/event'
 import { dummyEvents } from '@/fixtures/dummy-data'
+import { query_builder } from '@/utils/supabase_query_builder'
 
 /**
  * Fetch all events from Supabase
  */
-export async function getEvents(): Promise<Event[]> {
-  const { data, error } = await supabase
+// TODO: Make this much more efficient, and find a way to apply pagination
+export async function getEvents(params: string): Promise<Event[]> {
+  let query = supabase
     .from('events')
     .select('*')
-    .order('event_date', { ascending: true })
 
+  query = query_builder(params, query)
+  query.order('event_date', { ascending: true })
+
+  const { data, error } = await query
   if (error) {
     console.error('Error fetching events:', error)
     console.log('Using dummy data as fallback')
     return dummyEvents
   }
-
   return data && data.length > 0 ? data : dummyEvents
 }
 
 /**
  * Fetch events happening today
  */
-export async function getTodayEvents(): Promise<Event[]> {
+export async function getTodayEvents(params: string): Promise<Event[]> {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const tomorrow = new Date(today)
   tomorrow.setDate(tomorrow.getDate() + 1)
-
-  const events = await getEvents()
+  const events = await getEvents(params)
   return events.filter(event => {
     const eventDate = new Date(event.event_date)
     return eventDate >= today && eventDate < tomorrow
@@ -39,13 +42,13 @@ export async function getTodayEvents(): Promise<Event[]> {
 /**
  * Fetch events happening this week
  */
-export async function getThisWeekEvents(): Promise<Event[]> {
+export async function getThisWeekEvents(params: string): Promise<Event[]> {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const nextWeek = new Date(today)
   nextWeek.setDate(nextWeek.getDate() + 7)
 
-  const events = await getEvents()
+  const events = await getEvents(params)
   return events.filter(event => {
     const eventDate = new Date(event.event_date)
     return eventDate >= today && eventDate < nextWeek
@@ -55,8 +58,8 @@ export async function getThisWeekEvents(): Promise<Event[]> {
 /**
  * Fetch featured events (next 3 upcoming events)
  */
-export async function getFeaturedEvents(): Promise<Event[]> {
-  const events = await getEvents()
+export async function getFeaturedEvents(params: string): Promise<Event[]> {
+  const events = await getEvents(params)
   const now = new Date()
 
   return events
