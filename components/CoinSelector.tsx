@@ -5,7 +5,7 @@ import { ChevronDown, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/utils/utils'
-import { CoinGeckoData } from '@/services/coingecko'
+import { CoinGeckoData } from '@/repository/coingecko'
 import Image from 'next/image'
 
 interface CoinSelectorProps {

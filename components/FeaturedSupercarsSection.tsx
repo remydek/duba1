@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { SupercarCard } from '@/components/SupercarCard'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import type { Supercar } from '@/schemas/supercar'
-import type { CoinGeckoData } from '@/services/coingecko'
+import type { CoinGeckoData } from '@/repository/coingecko'
 
 interface FeaturedSupercarsSectionProps {
   supercars: Supercar[]

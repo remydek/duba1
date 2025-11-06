@@ -1,4 +1,4 @@
-import { getTodayEvents } from "@/services/events"
+import { getTodayEvents } from "@/repository/events"
 import { Event, EventRow } from "@/schemas/event"
 import { NextResponse } from "next/server"
 

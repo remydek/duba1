@@ -1,11 +1,13 @@
 import { Ticket, Calendar, TrendingUp } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EventCard } from '@/components/EventCard'
-import { getEvents, getTodayEvents, getThisWeekEvents } from '@/services/events'
+import { getEvents, getTodayEvents, getThisWeekEvents } from '@/repository/events'
+import { get_url_params } from '@/utils/get_url_params'
 
-export default async function EventsPage() {
+export default async function EventsPage({ searchParams }: { searchParams: Record<string, string> }) {
+  const params = get_url_params(await searchParams)
   const [allEvents, todayEvents, weekEvents] = await Promise.all([
-    getEvents(),
+   getEvents(params),
     getTodayEvents(),
     getThisWeekEvents(),
   ])
@@ -55,7 +57,7 @@ export default async function EventsPage() {
             </TabsTrigger>
           </TabsList>
 
-          {/* TODAY EVENTS */}
+          {/* TODAY EVENTS
           <TabsContent value="today">
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-2">Happening Today</h2>
@@ -76,9 +78,9 @@ export default async function EventsPage() {
                 ))}
               </div>
             )}
-          </TabsContent>
+          </TabsContent> */}
 
-          {/* THIS WEEK EVENTS */}
+          {/* THIS WEEK EVENTS
           <TabsContent value="week">
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-2">This Week</h2>
@@ -99,9 +101,9 @@ export default async function EventsPage() {
                 ))}
               </div>
             )}
-          </TabsContent>
+          </TabsContent> */}
 
-          {/* ALL EVENTS */}
+          ALL EVENTS
           <TabsContent value="all">
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-2">All Upcoming Events</h2>

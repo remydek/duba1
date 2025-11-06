@@ -12,12 +12,14 @@ interface EventCardProps {
 }
 
 export function EventCard({ event }: EventCardProps) {
+
   const eventDate = new Date(event.event_date)
   const formattedDate = eventDate.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric'
   })
+
   const formattedTime = eventDate.toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit'
@@ -33,7 +35,13 @@ export function EventCard({ event }: EventCardProps) {
     <Card className="overflow-hidden hover:border-primary transition-colors group p-0">
       <div className="relative h-64 w-full overflow-hidden bg-muted">
         <Image
-          src={event.images?.[0] || '/placeholder.jpg'}
+          src={
+              typeof event.images === 'string'
+                  ? event.images
+                  : Array.isArray(event.images) && event.images.length
+                      ? event.images[0]
+                      : '/placeholder.jpg'
+          }
           alt={event.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"

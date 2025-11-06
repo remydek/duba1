@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { formatAED } from '@/services/crypto'
+import { formatAED } from '@/repository/crypto'
 import { convertAED, formatCurrency, convertToCrypto, formatCryptoAmount, EXCHANGE_RATES } from '@/services/currency'
 import { useCurrency } from '@/contexts/CurrencyContext'
 

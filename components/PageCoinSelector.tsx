@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { ChevronDown, Coins } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utils/utils'
-import { CoinGeckoData } from '@/services/coingecko'
+import { CoinGeckoData } from '@/repository/coingecko'
 import { useCurrency } from '@/contexts/CurrencyContext'
 import Image from 'next/image'
 

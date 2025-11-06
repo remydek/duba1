@@ -9,12 +9,12 @@ import { FeaturedPropertiesSection } from '@/components/FeaturedPropertiesSectio
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
 import { FeaturedSupercarsSection } from '@/components/FeaturedSupercarsSection'
 import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
-import { getTopCoins } from '@/services/coingecko'
+import { getTopCoins } from '@/repository/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
-import { getFeaturedProperties } from '@/services/properties'
-import { getFeaturedEvents } from '@/services/events'
-import { getFeaturedSupercars } from '@/services/supercars'
-import { getFeaturedYachts } from '@/services/yachts'
+import { getFeaturedProperties } from '@/repository/properties'
+import { getFeaturedEvents } from '@/repository/events'
+import { getFeaturedSupercars } from '@/repository/supercars'
+import { getFeaturedYachts } from '@/repository/yachts'
 
 async function getCoins() {
   try {
@@ -146,7 +146,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Events */}
-      <FeaturedEventsSection events={featuredEvents} />
+      {featuredEvents.length > 0 && <FeaturedEventsSection events={featuredEvents} />}
 
       {/* Featured Supercars */}
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />

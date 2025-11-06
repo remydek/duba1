@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { formatAED } from '@/services/crypto'
+import { formatAED } from '@/repository/crypto'
 import {
   Bitcoin,
   Bed,
@@ -16,7 +16,7 @@ import {
   ArrowLeft,
   MessageCircle,
 } from 'lucide-react'
-import { getPropertyById } from '@/services/properties'
+import { getPropertyById } from '@/repository/properties'
 
 export default async function PropertyDetailPage({
   params,

@@ -1,6 +1,6 @@
-import { getTopCoins } from '@/services/coingecko'
+import { getTopCoins } from '@/repository/coingecko'
 import { YachtsClient } from './YachtsClient'
-import { getYachts } from '@/services/yachts'
+import { getYachts } from '@/repository/yachts'
 
 async function getCoins() {
   try {
