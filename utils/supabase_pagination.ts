@@ -10,5 +10,5 @@ export function pagination(params: Record<string, string[]>) {
     const newParams = { ...params };
     delete newParams.page;
     delete newParams.limit;
-    return { page, limit, start, end }
+    return {start, end }
 }

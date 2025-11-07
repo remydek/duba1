@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
+// TODO: research for supabase query types
 export function query_builder(params: Record<string, string[]>, query) {
     if (!params) {
         return query

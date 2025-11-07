@@ -12,7 +12,7 @@ import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
 import { getTopCoins } from '@/repository/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
 import { getFeaturedProperties } from '@/repository/properties'
-import { getFeaturedEvents } from '@/repository/events'
+import { getFeaturedEvents } from '@/services/events'
 import { getFeaturedSupercars } from '@/repository/supercars'
 import { getFeaturedYachts } from '@/repository/yachts'
 
