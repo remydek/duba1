@@ -5,7 +5,7 @@ import { getTodayEvents, getThisWeekEvents, getAllEvents } from '@/services/even
 import type { Event } from '@/schemas/event'
 
 export default async function EventsPage() {
-  const [allEventsData, todayEvents, weekEvents] = await Promise.all([
+  const [{data: allEventsData}, {data: todayEvents}, {data: weekEvents}] = await Promise.all([
     getAllEvents(),
     getTodayEvents(),
     getThisWeekEvents(),

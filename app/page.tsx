@@ -26,7 +26,7 @@ async function getCoins() {
 }
 
 export default async function HomePage() {
-  const [featuredProperties, featuredEvents, featuredSupercars, featuredYachts, coins] = await Promise.all([
+  const [featuredProperties, { data: featuredEvents}, featuredSupercars, featuredYachts, coins] = await Promise.all([
     getFeaturedProperties(),
     getFeaturedEvents(),
     getFeaturedSupercars(),

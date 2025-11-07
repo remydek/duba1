@@ -1,6 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // TODO: research for supabase query types
-export function query_builder(params: Record<string, string[]>, query) {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function query_builder(params: Record<string, string[]>, query: any) {
     if (!params) {
         return query
     }
@@ -15,12 +16,24 @@ export function query_builder(params: Record<string, string[]>, query) {
         }
         else if (key.endsWith('_from')){
             const key_value = key.replace('_from', '')
-            query = query.gte(key_value, values[0])
+            const timestampRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/;
+            const value = values[0];
+            if (!timestampRegex.test(value)) {
+                query = query.gte(key_value, `${value}T00:00:00Z`)
+            } else {
+                query = query.gte(key_value, value)
+            }
             continue
         }
         else if (key.endsWith('_to')){
             const key_value = key.replace('_to', '')
-            query = query.lte(key_value, values[0])
+            const timestampRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/;
+            const value = values[0];
+            if (!timestampRegex.test(value)) {
+                query = query.lte(key_value, `${value}T23:59:59Z`)
+            } else {
+                query = query.lte(key_value, value)
+            }
             continue
         }else{
             if (values.length > 1) {

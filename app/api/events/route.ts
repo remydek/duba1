@@ -1,18 +1,13 @@
 import { getTodayEvents } from "@/services/events"
-import { Event, EventRow } from "@/schemas/event"
-import { NextResponse } from "next/server"
+import { Event } from "@/schemas/event"
+import { NextRequest, NextResponse } from "next/server"
+import { get_url_params } from "@/utils/get_url_params"
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url)
-  const params = Object.fromEntries(searchParams.entries())
-  const events: Event[] = await getTodayEvents()
-  const events_data = EventRow.parse(events)
-  return NextResponse.json({
-    params,
-    events: events_data,
-  })
+export async function GET(req: NextRequest) {
+  const params : Record<string, string[]> = get_url_params(req.nextUrl.searchParams)
+  const events: { data: Event[], count?: number } = await getTodayEvents(params)
+  return NextResponse.json(events)
 }
-
 // export async function POST(req: Request) {
 //     const body = await req.json()
 //     return

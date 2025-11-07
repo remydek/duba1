@@ -4,21 +4,27 @@ import { dummyEvents } from '@/fixtures/dummy-data'
 /**
  * Fetch all events
  */
-export async function getAllEvents(params = { page: ['1'], limit: ['10'] }): Promise<Event[]> {
+export async function getAllEvents(params = { page: ['1'], limit: ['10'] }, get_count: boolean = false): Promise<{ data: Event[], count?: number }> {
   const { data, error, count } = await getEvents(params)
   if (error) {
     console.error('Error fetching events:', error)
     console.log('Using dummy data as fallback')
-    return dummyEvents
+    return {
+      data: dummyEvents,
+      count: get_count ? dummyEvents.length : undefined
+    }
   }
-  return data
+  return {
+    data,
+    count: get_count ? count ?? 0 : undefined
+  }
 }
 
 /**
  * Fetch events happening today
  */
 export async function getTodayEvents(
-  params = (() => {
+  params: Record<string, string[]> = (() => {
     const now = new Date()
     const start = new Date(Date.UTC(
       now.getUTCFullYear(),
@@ -39,8 +45,8 @@ export async function getTodayEvents(
       event_date_from: [start.toISOString()],
       event_date_to: [end.toISOString()]
     }
-  })()
-): Promise<Event[]> {
+  })(), get_count: boolean = false
+): Promise<{ data: Event[], count?: number }> {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const tomorrow = new Date(today)
@@ -49,13 +55,19 @@ export async function getTodayEvents(
   if (error) {
     console.error('Error fetching events:', error)
     console.log('Using dummy data as fallback')
-    return dummyEvents
+  return {
+      data: dummyEvents,
+      count: get_count ? dummyEvents.length : undefined
+    }
   }
-  return data
+  return {
+    data,
+    count: get_count ? count ?? 0 : undefined
+  }
 }
 
 export async function getThisWeekEvents(
-  params = (() => {
+  params: Record<string, string[]> = (() => {
     const now = new Date()
     const utcYear = now.getUTCFullYear()
     const utcMonth = now.getUTCMonth()
@@ -82,31 +94,44 @@ export async function getThisWeekEvents(
       event_date_from: [startOfWeek.toISOString()],
       event_date_to: [endOfWeek.toISOString()]
     }
-  })()
-): Promise<Event[]> {
+  })(),
+  get_count: boolean = false
+): Promise<{ data: Event[], count?: number }> {
   const { data, error, count } = await getEvents(params)
   if (error) {
     console.error('Error fetching events:', error)
     console.log('Using dummy data as fallback')
-    return dummyEvents
+   return {
+      data: dummyEvents,
+      count: get_count ? dummyEvents.length : undefined
+    }
   }
-  return data
+  return {
+    data,
+    count: get_count ? count ?? 0 : undefined
+  }
 
 }
 
 /**
  * Fetch featured events (next 3 upcoming events)
  */
-export async function getFeaturedEvents(params = {
+export async function getFeaturedEvents(params: Record<string, string[]> = {
   page: ['1'], limit: ['3'], event_date_from: [new Date().toISOString().split('T')[0]
   ]
-}): Promise<Event[]> {
+}, get_count: boolean = false): Promise<{ data: Event[], count?: number }> {
   const { data, error, count } = await getEvents(params)
   if (error) {
     console.error('Error fetching events:', error)
     console.log('Using dummy data as fallback')
-    return dummyEvents
+  return {
+      data: dummyEvents,
+      count: get_count ? dummyEvents.length : undefined
+    }
   }
-  return data
+  return {
+    data,
+    count: get_count ? count ?? 0 : undefined
+  }
 }
 
