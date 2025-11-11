@@ -1,6 +1,6 @@
 import { getTopCoins } from '@/repository/coingecko'
 import { SupercarsClient } from './SupercarsClient'
-import { getSupercars } from '@/repository/supercars'
+import { getAllSupercars } from '@/services/supercars'
 
 async function getCoins() {
   try {
@@ -12,8 +12,8 @@ async function getCoins() {
 }
 
 export default async function SupercarsPage() {
-  const [supercars, coins] = await Promise.all([
-    getSupercars(),
+  const [{ data: supercars}, coins] = await Promise.all([
+    getAllSupercars(),
     getCoins()
   ])
 

@@ -13,7 +13,7 @@ import { getTopCoins } from '@/repository/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
 import { getFeaturedProperties } from '@/repository/properties'
 import { getFeaturedEvents } from '@/services/events'
-import { getFeaturedSupercars } from '@/repository/supercars'
+import { getFeaturedSupercars } from '@/services/supercars'
 import { getFeaturedYachts } from '@/repository/yachts'
 
 async function getCoins() {
@@ -26,7 +26,7 @@ async function getCoins() {
 }
 
 export default async function HomePage() {
-  const [featuredProperties, { data: featuredEvents}, featuredSupercars, featuredYachts, coins] = await Promise.all([
+  const [featuredProperties, { data: featuredEvents}, { data:featuredSupercars}, featuredYachts, coins] = await Promise.all([
     getFeaturedProperties(),
     getFeaturedEvents(),
     getFeaturedSupercars(),
@@ -146,7 +146,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Events */}
-      {featuredEvents.length > 0 && <FeaturedEventsSection events={featuredEvents} />}
+      {<FeaturedEventsSection events={featuredEvents} />}
 
       {/* Featured Supercars */}
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
