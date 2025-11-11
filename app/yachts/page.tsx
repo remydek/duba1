@@ -1,6 +1,6 @@
 import { getTopCoins } from '@/repository/coingecko'
 import { YachtsClient } from './YachtsClient'
-import { getYachts } from '@/repository/yachts'
+import { getAllYachts } from '@/services/yachts'
 
 async function getCoins() {
   try {
@@ -12,8 +12,8 @@ async function getCoins() {
 }
 
 export default async function YachtsPage() {
-  const [yachts, coins] = await Promise.all([
-    getYachts(),
+  const [{ data:yachts}, coins] = await Promise.all([
+    getAllYachts(),
     getCoins()
   ])
 

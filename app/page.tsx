@@ -14,7 +14,7 @@ import { HeroSlideshow } from '@/components/HeroSlideshow'
 import { getFeaturedProperties } from '@/repository/properties'
 import { getFeaturedEvents } from '@/services/events'
 import { getFeaturedSupercars } from '@/services/supercars'
-import { getFeaturedYachts } from '@/repository/yachts'
+import { getFeaturedYachts } from '@/services/yachts'
 
 async function getCoins() {
   try {
@@ -26,7 +26,7 @@ async function getCoins() {
 }
 
 export default async function HomePage() {
-  const [featuredProperties, { data: featuredEvents}, { data:featuredSupercars}, featuredYachts, coins] = await Promise.all([
+  const [featuredProperties, { data: featuredEvents}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
     getFeaturedProperties(),
     getFeaturedEvents(),
     getFeaturedSupercars(),

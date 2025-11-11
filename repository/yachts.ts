@@ -1,30 +1,26 @@
 import { supabase } from '@/lib/supabase'
 import type { Yacht } from '@/schemas/yacht'
 import { dummyYachts } from '@/fixtures/dummy-data'
+import { query_builder } from '@/utils/supabase_query_builder'
+import { pagination } from '@/utils/supabase_pagination'
 
-
-// TODO: Make Service Layer and Route Api for Obsecurity
-/**
- * Fetch all yachts from Supabase
- */
-export async function getYachts(): Promise<Yacht[]> {
-  const { data, error } = await supabase
+export async function getYachts(params: Record<string, string[]>) {
+  let query = supabase
     .from('yachts')
-    .select('*')
-    .order('created_at', { ascending: false })
+    .select('*', { count: 'exact' })
+  query = query_builder(params, query)
+  query.order('created_at', { ascending: true })
 
-  if (error) {
-    console.error('Error fetching yachts:', error)
-    console.log('Using dummy data as fallback')
-    return dummyYachts
-  }
-
-  return data && data.length > 0 ? data : dummyYachts
+  const { start, end } = pagination(params)
+  query = query.range(start, end)
+  return query
 }
 
 /**
  * Fetch a single yacht by ID
  */
+
+
 export async function getYachtById(id: string): Promise<Yacht | null> {
   const { data, error } = await supabase
     .from('yachts')
@@ -35,34 +31,7 @@ export async function getYachtById(id: string): Promise<Yacht | null> {
   if (error) {
     console.error('Error fetching yacht:', error)
     console.log('Using dummy data as fallback')
-    return dummyYachts.find(y => y.id === id) || dummyYachts[0]
+    return dummyYachts.find((e: Yacht)  => e.id == id) || dummyYachts[0]
   }
-
   return data
-}
-
-/**
- * Search yachts by name or location
- */
-export async function searchYachts(query: string): Promise<Yacht[]> {
-  const { data, error } = await supabase
-    .from('yachts')
-    .select('*')
-    .or(`name.ilike.%${query}%,location.ilike.%${query}%`)
-    .order('created_at', { ascending: false })
-
-  if (error) {
-    console.error('Error searching yachts:', error)
-    return []
-  }
-
-  return data || []
-}
-
-/**
- * Fetch featured yachts (first 3)
- */
-export async function getFeaturedYachts(): Promise<Yacht[]> {
-  const yachts = await getYachts()
-  return yachts.slice(0, 3)
 }
