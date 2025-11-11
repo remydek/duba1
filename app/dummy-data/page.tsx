@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, Home, Anchor, Car } from 'lucide-react'
 import { dummyProperties, dummyYachts, dummySupercars } from '@/fixtures/dummy-data'
-import { formatAED } from '@/repository/crypto'
+import { formatAED } from '@/repository/public/crypto'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'

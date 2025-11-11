@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { PropertyCard } from '@/components/PropertyCard'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import type { Property } from '@/schemas/property'
-import type { CoinGeckoData } from '@/repository/coingecko'
+import type { CoinGeckoData } from '@/repository/public/coingecko'
 
 interface FeaturedPropertiesSectionProps {
   properties: Property[]

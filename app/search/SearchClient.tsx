@@ -12,7 +12,7 @@ import { PageCoinSelector } from '@/components/PageCoinSelector'
 import type { Property } from '@/schemas/property'
 import type { Supercar } from '@/schemas/supercar'
 import type { Yacht } from '@/schemas/yacht'
-import type { CoinGeckoData } from '@/repository/coingecko'
+import type { CoinGeckoData } from '@/repository/public/coingecko'
 
 interface SearchClientProps {
   properties: Property[]

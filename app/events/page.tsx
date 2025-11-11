@@ -1,14 +1,15 @@
 import { Ticket, Calendar, TrendingUp } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EventCard } from '@/components/EventCard'
-import { getTodayEvents, getThisWeekEvents, getAllEvents } from '@/services/events'
+import { EventPublicService } from '@/services/public/events'
 import type { Event } from '@/schemas/event'
 
 export default async function EventsPage() {
+  const eventPublicService = new EventPublicService()
   const [{data: allEventsData}, {data: todayEvents}, {data: weekEvents}] = await Promise.all([
-    getAllEvents(),
-    getTodayEvents(),
-    getThisWeekEvents(),
+    eventPublicService.getAllEvents(),
+    eventPublicService.getTodayEvents(),
+    eventPublicService.getThisWeekEvents(),
   ])
   return (
     <div className="min-h-screen py-12">

@@ -1,11 +1,13 @@
-import { supabase } from '@/lib/supabase'
+import { supabase_public } from '@/lib/supabase-client'
 import type { Supercar } from '@/schemas/supercar'
 import { dummySupercars } from '@/fixtures/dummy-data'
 import { query_builder } from '@/utils/supabase_query_builder'
 import { pagination } from '@/utils/supabase_pagination'
 
-export async function getSupercars(params: Record<string, string[]>) {
-  let query = supabase
+
+export class SupercarPublicRepository {
+  async getSupercars(params: Record<string, string[]>) {
+  let query = supabase_public
     .from('supercars')
     .select('*', { count: 'exact' })
   query = query_builder(params, query)
@@ -21,8 +23,8 @@ export async function getSupercars(params: Record<string, string[]>) {
  */
 
 
-export async function getSupercarById(id: string): Promise<Supercar | null> {
-  const { data, error } = await supabase
+async getSupercarById(id: string): Promise<Supercar | null> {
+  const { data, error } = await supabase_public
     .from('supercars')
     .select('*')
     .eq('id', id)
@@ -31,7 +33,9 @@ export async function getSupercarById(id: string): Promise<Supercar | null> {
   if (error) {
     console.error('Error fetching supercar:', error)
     console.log('Using dummy data as fallback')
-    return dummySupercars.find((e: Supercar)  => e.id == id) || dummySupercars[0]
+    return dummySupercars.find((e: Supercar) => e.id == id) || dummySupercars[0]
   }
   return data
+}
+
 }
