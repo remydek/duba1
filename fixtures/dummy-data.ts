@@ -1,4 +1,7 @@
-import { Property, Yacht, Supercar, Event } from '@/types/database'
+import { Property} from '@/schemas/property'
+import { Yacht } from '@/schemas/yacht'
+import { Supercar } from '@/schemas/supercar'
+import { Event } from '@/schemas/event'
 
 export const dummyProperties: Property[] = [
   {

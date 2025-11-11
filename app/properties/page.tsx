@@ -1,6 +1,6 @@
-import { getTopCoins } from '@/lib/coingecko'
+import { getTopCoins } from '@/repository/public/coingecko'
 import { PropertiesClient } from './PropertiesClient'
-import { getProperties } from '@/lib/queries/properties'
+import { PropertyPublicService } from '@/services/public/properties'
 
 async function getCoins() {
   try {
@@ -12,8 +12,9 @@ async function getCoins() {
 }
 
 export default async function PropertiesPage() {
-  const [properties, coins] = await Promise.all([
-    getProperties(),
+  const propertiesService = new PropertyPublicService()
+  const [{ data :properties }, coins] = await Promise.all([
+    propertiesService.getAllProperties(),
     getCoins()
   ])
 

@@ -7,7 +7,7 @@ import { Bitcoin } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PriceDisplay } from '@/components/PriceDisplay'
-import type { Property } from '@/types/database'
+import type { Property } from '@/schemas/property'
 
 export function PropertyCard({ property }: { property: Property }) {
   const [isHovering, setIsHovering] = useState(false)

@@ -82,7 +82,7 @@ app/
 
 The app operates without a live Supabase connection by design:
 - `lib/supabase.ts` creates client with dummy credentials if env vars missing
-- Components use `lib/dummy-data.ts` for development data
+- Components use `fixtures/dummy-data.ts` for development data
 - When configured, replace imports with actual Supabase queries
 
 **Supabase Connection Flow:**
@@ -211,7 +211,7 @@ export function PriceWidget() {
 
 **Currently (Dummy Mode):**
 ```typescript
-import { dummyProperties } from '@/lib/dummy-data'
+import { dummyProperties } from '@/fixtures/dummy-data'
 
 async function getProperties() {
   return dummyProperties  // Returns mock data
@@ -340,7 +340,7 @@ COINGECKO_API_KEY=
 
 The app is designed to work without Supabase:
 
-1. **Homepage displays dummy properties** from `lib/dummy-data.ts`
+1. **Homepage displays dummy properties** from `fixtures/dummy-data.ts`
 2. **API routes return mock data** with console logs for leads
 3. **Crypto prices fetch from CoinGecko** or fallback to hardcoded values
 4. **No database errors** - graceful degradation throughout
@@ -463,7 +463,7 @@ npx shadcn@latest add [component-name]
 - Type-safe database definitions
 
 ✅ **Dummy Data Mode:**
-- 6 properties, 3 yachts, 4 supercars in `lib/dummy-data.ts`
+- 6 properties, 3 yachts, 4 supercars in `fixtures/dummy-data.ts`
 - Graceful degradation without Supabase
 - Console logging for lead submissions
 
@@ -546,7 +546,7 @@ npx shadcn@latest add [component-name]
    ```
    Creates client even without real credentials
 
-2. **Dummy Data (`lib/dummy-data.ts`):**
+2. **Dummy Data (`fixtures/dummy-data.ts`):**
    - Exports `dummyProperties`, `dummyYachts`, `dummySupercars`
    - Structured identically to database rows
    - Uses Unsplash images for visuals
@@ -554,7 +554,7 @@ npx shadcn@latest add [component-name]
 3. **Component Pattern:**
    ```typescript
    // Current (dummy mode)
-   import { dummyProperties } from '@/lib/dummy-data'
+   import { dummyProperties } from '@/fixtures/dummy-data'
    const properties = await getFeaturedProperties()  // Returns dummy data
    
    // Future (Supabase mode)

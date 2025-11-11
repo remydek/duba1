@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, ReactNode } from 'react'
-import { CoinGeckoData } from '@/lib/coingecko'
+import { CoinGeckoData } from '@/repository/public/coingecko'
 
 interface CurrencyContextType {
   selectedCoin: CoinGeckoData | null

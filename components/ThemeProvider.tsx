@@ -30,7 +30,7 @@ export function ThemeProvider({
       setTheme(savedTheme)
     }
   }, [])
-
+  // TODO: Make a Persistent Store for Theme using RTK (Yes, This acceptable but using RTK for be better)
   useEffect(() => {
     const root = window.document.documentElement
     root.classList.remove('light', 'dark')

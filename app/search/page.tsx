@@ -1,8 +1,8 @@
-import { getTopCoins } from '@/lib/coingecko'
+import { getTopCoins } from '@/repository/public/coingecko'
 import { SearchClient } from './SearchClient'
-import { getProperties } from '@/lib/queries/properties'
-import { getYachts } from '@/lib/queries/yachts'
-import { getSupercars } from '@/lib/queries/supercars'
+import { PropertyPublicService } from '@/services/public/properties'
+import { YachtPublicService } from '@/services/public/yachts'
+import { SupercarPublicService } from '@/services/public/supercars'
 
 async function getCoins() {
   try {
@@ -20,11 +20,13 @@ export default async function SearchPage({
 }) {
   const params = await searchParams
   const categories = params.categories?.split(',') || []
-
-  const [properties, yachts, supercars, coins] = await Promise.all([
-    getProperties(),
-    getYachts(),
-    getSupercars(),
+  const propertyPublicService = new PropertyPublicService()
+  const yachtPublicService=  new  YachtPublicService()
+  const supercarPublicService=  new  SupercarPublicService()
+  const [{ data: properties}, { data:yachts }, { data:supercars }, coins] = await Promise.all([
+    propertyPublicService.getAllProperties(),
+    yachtPublicService.getAllYachts(),
+    supercarPublicService.getAllSupercars(),
     getCoins()
   ])
 

@@ -5,8 +5,8 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { SupercarCard } from '@/components/SupercarCard'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
-import type { Supercar } from '@/types/database'
-import type { CoinGeckoData } from '@/lib/coingecko'
+import type { Supercar } from '@/schemas/supercar'
+import type { CoinGeckoData } from '@/repository/public/coingecko'
 
 interface FeaturedSupercarsSectionProps {
   supercars: Supercar[]

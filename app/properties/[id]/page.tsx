@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { formatAED } from '@/lib/crypto'
+import { formatAED } from '@/repository/public/crypto'
 import {
   Bitcoin,
   Bed,
@@ -16,7 +16,7 @@ import {
   ArrowLeft,
   MessageCircle,
 } from 'lucide-react'
-import { getPropertyById } from '@/lib/queries/properties'
+import { PropertyPublicService } from '@/services/public/properties'
 
 export default async function PropertyDetailPage({
   params,
@@ -24,7 +24,8 @@ export default async function PropertyDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const property = await getPropertyById(id)
+  const propertyPublicService = new PropertyPublicService()
+  const property = await propertyPublicService.getPropertyById(id)
 
   if (!property) {
     notFound()

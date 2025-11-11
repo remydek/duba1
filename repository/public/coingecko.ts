@@ -1,3 +1,6 @@
+import { coinGecko } from "@/fixtures/coin-gecko"
+import { Crypto } from '@/schemas/crypto'
+
 export interface CoinGeckoData {
   id: string
   symbol: string
@@ -24,7 +27,6 @@ export async function getTopCoins(): Promise<CoinGeckoData[]> {
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=aed&order=market_cap_desc&per_page=100&page=1&sparkline=false',
       { next: { revalidate: 300 } } // Cache for 5 minutes
     )
-
     if (!response.ok) {
       throw new Error('Failed to fetch coin data')
     }
@@ -41,36 +43,8 @@ export async function getTopCoins(): Promise<CoinGeckoData[]> {
   }
 }
 
-export function getFallbackCoins(): CoinGeckoData[] {
-  return [
-    {
-      id: 'bitcoin',
-      symbol: 'btc',
-      name: 'Bitcoin',
-      image: 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png',
-      current_price: 250000,
-      price_change_24h: 0,
-      market_cap_rank: 1,
-    },
-    {
-      id: 'ethereum',
-      symbol: 'eth',
-      name: 'Ethereum',
-      image: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
-      current_price: 12000,
-      price_change_24h: 0,
-      market_cap_rank: 2,
-    },
-    {
-      id: 'tether',
-      symbol: 'usdt',
-      name: 'Tether',
-      image: 'https://assets.coingecko.com/coins/images/325/small/Tether.png',
-      current_price: 3.67,
-      price_change_24h: 0,
-      market_cap_rank: 3,
-    },
-  ]
+export function getFallbackCoins(): Crypto[] {
+  return coinGecko
 }
 
 export async function getCoinPrice(coinId: string): Promise<number> {

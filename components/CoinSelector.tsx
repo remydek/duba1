@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from 'react'
 import { ChevronDown, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
-import { CoinGeckoData } from '@/lib/coingecko'
+import { cn } from '@/utils/utils'
+import { CoinGeckoData } from '@/repository/public/coingecko'
 import Image from 'next/image'
 
 interface CoinSelectorProps {

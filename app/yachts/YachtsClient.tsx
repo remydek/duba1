@@ -6,8 +6,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Search, Ship } from 'lucide-react'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import { PageCoinSelector } from '@/components/PageCoinSelector'
-import type { Yacht } from '@/types/database'
-import type { CoinGeckoData } from '@/lib/coingecko'
+import type { Yacht } from '@/schemas/yacht'
+import type { CoinGeckoData } from '@/repository/public/coingecko'
 
 interface YachtsClientProps {
   yachts: Yacht[]

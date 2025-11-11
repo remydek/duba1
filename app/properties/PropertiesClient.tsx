@@ -7,8 +7,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import { PageCoinSelector } from '@/components/PageCoinSelector'
-import type { Property } from '@/types/database'
-import type { CoinGeckoData } from '@/lib/coingecko'
+import type { Property } from '@/schemas/property'
+import type { CoinGeckoData } from '@/repository/public/coingecko'
 
 interface PropertiesClientProps {
   properties: Property[]

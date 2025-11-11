@@ -9,12 +9,12 @@ import { FeaturedPropertiesSection } from '@/components/FeaturedPropertiesSectio
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
 import { FeaturedSupercarsSection } from '@/components/FeaturedSupercarsSection'
 import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
-import { getTopCoins } from '@/lib/coingecko'
+import { getTopCoins } from '@/repository/public/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
-import { getFeaturedProperties } from '@/lib/queries/properties'
-import { getFeaturedEvents } from '@/lib/queries/events'
-import { getFeaturedSupercars } from '@/lib/queries/supercars'
-import { getFeaturedYachts } from '@/lib/queries/yachts'
+import { PropertyPublicService } from '@/services/public/properties'
+import { EventPublicService } from '@/services/public/events'
+import { SupercarPublicService } from '@/services/public/supercars'
+import { YachtPublicService } from '@/services/public/yachts'
 
 async function getCoins() {
   try {
@@ -26,11 +26,15 @@ async function getCoins() {
 }
 
 export default async function HomePage() {
-  const [featuredProperties, featuredEvents, featuredSupercars, featuredYachts, coins] = await Promise.all([
-    getFeaturedProperties(),
-    getFeaturedEvents(),
-    getFeaturedSupercars(),
-    getFeaturedYachts(),
+  const eventPublicService = new EventPublicService()
+  const propertyPublicService = new PropertyPublicService()
+  const supercarPublicService = new SupercarPublicService()
+  const yachtPublicService = new YachtPublicService()
+  const [{ data:featuredProperties }, { data: featuredEvents}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
+    propertyPublicService.getFeaturedProperties(),
+    eventPublicService.getFeaturedEvents(),
+    supercarPublicService.getFeaturedSupercars(),
+    yachtPublicService.getFeaturedYachts(),
     getCoins()
   ])
 
@@ -146,7 +150,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Events */}
-      <FeaturedEventsSection events={featuredEvents} />
+      {<FeaturedEventsSection events={featuredEvents} />}
 
       {/* Featured Supercars */}
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />

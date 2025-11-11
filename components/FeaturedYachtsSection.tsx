@@ -5,8 +5,8 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { YachtCard } from '@/components/YachtCard'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
-import type { Yacht } from '@/types/database'
-import type { CoinGeckoData } from '@/lib/coingecko'
+import type { Yacht } from '@/schemas/yacht'
+import type { CoinGeckoData } from '@/repository/public/coingecko'
 
 interface FeaturedYachtsSectionProps {
   yachts: Yacht[]
