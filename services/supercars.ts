@@ -4,7 +4,7 @@ import { dummySupercars } from '@/fixtures/dummy-data'
 /**
  * Fetch all supercars
  */
-export async function getAllSupercars(params = { page: ['1'], limit: ['10'] }, get_count: boolean = false): Promise<{ data: Supercar[], count?: number }> {
+export async function getAllSupercars(params = { page: ['1'], limit: ['20'] }, get_count: boolean = false): Promise<{ data: Supercar[], count?: number }> {
   const { data, error, count } = await getSupercars(params)
   if (error) {
     console.error('Error fetching supercars:', error)

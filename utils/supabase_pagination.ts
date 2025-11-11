@@ -1,7 +1,7 @@
 
 export function pagination(params: Record<string, string[]>) {
     if (!params || params.page === undefined || params.limit === undefined) {
-        return { page: 1, limit: 10, start: 0, end: 9 }
+        return { page: 1, limit: 10, start: 0, end: 999 }
     }
     const page = Number(params.page?.[0] || 1)
     const limit = Number(params.limit?.[0] || 10)

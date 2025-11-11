@@ -4,7 +4,7 @@ import { dummyEvents } from '@/fixtures/dummy-data'
 /**
  * Fetch all events
  */
-export async function getAllEvents(params = { page: ['1'], limit: ['10'] }, get_count: boolean = false): Promise<{ data: Event[], count?: number }> {
+export async function getAllEvents(params = { page: ['1'], limit: ['20'] }, get_count: boolean = false): Promise<{ data: Event[], count?: number }> {
   const { data, error, count } = await getEvents(params)
   if (error) {
     console.error('Error fetching events:', error)
