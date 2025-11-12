@@ -41,8 +41,8 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      {/* <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
-        Background Image Slideshow with Overlay
+      <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
+        {/* Background Image Slideshow with Overlay */}
         <HeroSlideshow />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -58,10 +58,10 @@ export default async function HomePage() {
               Events • Properties • Supercars • Yachts
             </p>
 
-            Quick Crypto Calculator
+            {/* Quick Crypto Calculator */}
             <HeroCalculator coins={coins} />
 
-            Search Bar
+            {/* Search Bar */}
             <div className="inline-block bg-card/50 backdrop-blur-md border border-primary/30 rounded-xl p-4 shadow-[0_0_25px_-5px_rgba(212,175,55,0.3)] w-[600px] max-w-full">
               <div className="flex gap-2 items-center">
                 <div className="flex items-center gap-2 bg-background/80 backdrop-blur rounded-lg px-3 py-2 border-primary/20 flex-1">
@@ -80,10 +80,10 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Quick Links */}
-      {/* <section className="py-12 border-y border-border">
+      <section className="py-12 border-y border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link href="/events" className="group">
@@ -147,19 +147,19 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Featured Events */}
       {<FeaturedEventsSection events={featuredEvents} />}
-{/* 
-      Featured Supercars
+
+      {/* Featured Supercars */}
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
 
-      Featured Properties
+      {/* Featured Properties */}
       <FeaturedPropertiesSection properties={featuredProperties} coins={coins} />
 
-      Featured Yachts
-      <FeaturedYachtsSection yachts={featuredYachts} coins={coins} /> */}
+      {/* Featured Yachts */}
+      <FeaturedYachtsSection yachts={featuredYachts} coins={coins} />
     </div>
   )
 }

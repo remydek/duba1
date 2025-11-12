@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-card mt-20">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center mb-4">
@@ -42,7 +42,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Properties */}
+          {/* Properties
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Properties</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -53,7 +53,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Lifestyle */}
+          Lifestyle
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Lifestyle</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -62,10 +62,10 @@ export function Footer() {
               <li><Link href="/supercars" className="hover:text-primary transition-colors">Supercar Rentals</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Golden Visa</Link></li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact */}
-          <div>
+          <div className="justify-self-end">
             <h3 className="font-semibold mb-4 text-foreground">Contact</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>Dubai, UAE</li>
