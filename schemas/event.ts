@@ -5,12 +5,12 @@ export const EventRow = z.object({
   title: z.string(),
   description: z.string().nullable(),
   price_aed: z.number(),
-  event_date: z.string() .refine((val) => {
-    const isoTZRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/
+  event_date: z.string().or(z.string().refine((val) => {
+    const isoTZRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/
     return isoTZRegex.test(val)
   }, {
     message: 'Invalid datetime with timezone'
-  }),
+  })),
   venue: z.string().nullable(),
   location: z.string().nullable(),
   category: z.string().nullable(),
