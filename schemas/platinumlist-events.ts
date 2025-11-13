@@ -13,6 +13,20 @@ const priceSchema = z.object({
     currency: z.string(),
   }),
 });
+const venueSchema = z.object({
+  data: z.array(z.object({
+    id: z.number(),
+    name: z.string(),
+    info: z.string().nullable(),
+    location: z.string(),
+    phone: z.string().nullable(),
+    website: z.string().nullable(),
+    latitude: z.string(),
+    longitude: z.string(),
+    image_big: imageSchema,
+    image_small: imageSchema,
+  }))
+})
 
 const eventSchema = z.object({
   id: z.number(),
@@ -43,6 +57,7 @@ const eventSchema = z.object({
   iframe_url: z.string().url(),
   iframe_whitelabel_url: z.string().nullable(),
   price: priceSchema,
+  venues: venueSchema,
 });
 
 const paginationSchema = z.object({
@@ -68,3 +83,6 @@ export const platinumlistResponseSchema = z.object({
 
 // Type inference
 export type PlatinumlistResponse = z.infer<typeof platinumlistResponseSchema>;
+
+export type PlatinumlistEvent = z.infer<typeof eventSchema>;
+export type PlatinumlistMeta = z.infer<typeof metaSchema>;

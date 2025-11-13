@@ -12,7 +12,7 @@ import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
 import { getTopCoins } from '@/repository/public/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
 import { PropertyPublicService } from '@/services/public/properties'
-import { EventPublicService } from '@/services/public/events'
+import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 import { SupercarPublicService } from '@/services/public/supercars'
 import { YachtPublicService } from '@/services/public/yachts'
 
@@ -26,18 +26,18 @@ async function getCoins() {
 }
 
 export default async function HomePage() {
-  const eventPublicService = new EventPublicService()
+  const eventPlatinumListPrivateService = new PlatinumListService()
   const propertyPublicService = new PropertyPublicService()
   const supercarPublicService = new SupercarPublicService()
   const yachtPublicService = new YachtPublicService()
-  const [{ data:featuredProperties }, { data: featuredEvents}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
+  const [{ data:featuredProperties }, { data: featuredEvents, count: eventCount, meta: eventMeta}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
     propertyPublicService.getFeaturedProperties(),
-    eventPublicService.getFeaturedEvents(),
+    eventPlatinumListPrivateService.getEvents(),
     supercarPublicService.getFeaturedSupercars(),
     yachtPublicService.getFeaturedYachts(),
     getCoins()
   ])
-
+  console.log(featuredEvents)
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
