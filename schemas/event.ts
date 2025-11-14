@@ -17,7 +17,7 @@ export const EventRow = z.object({
   images: z.array(z.string()).nullable(),
   tickets_available: z.number().nullable().or(z.string().nullable()),
   source: z.string().nullable(),
-  url: z.string().nullable(),
+  url: z.string().optional(),
   created_at: z.string().nullable(),
 });
 
