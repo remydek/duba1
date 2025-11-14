@@ -32,12 +32,16 @@ export default async function HomePage() {
   const yachtPublicService = new YachtPublicService()
   const [{ data:featuredProperties }, { data: featuredEvents, count: eventCount, meta: eventMeta}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
     propertyPublicService.getFeaturedProperties(),
-    eventPlatinumListPrivateService.getEvents(),
+    eventPlatinumListPrivateService.getEvents({
+    start_from: Date.now() / 1000,
+    per_page: 11,
+    page: 1,
+    sort: "-rating",
+}),
     supercarPublicService.getFeaturedSupercars(),
     yachtPublicService.getFeaturedYachts(),
     getCoins()
   ])
-  console.log(featuredEvents)
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -150,7 +154,7 @@ export default async function HomePage() {
       </section> */}
 
       {/* Featured Events */}
-      {<FeaturedEventsSection events={featuredEvents} />}
+      {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} />}
 {/* 
       Featured Supercars
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />

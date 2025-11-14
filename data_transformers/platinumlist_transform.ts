@@ -10,9 +10,9 @@ export const transformPlatinumlistToEvent = (data: PlatinumlistEvent): Event => 
     ? DateTime.fromMillis(timestamp, { zone: 'Asia/Dubai' }).toUTC().toISO()
     : null
   const images = [
-  data.image_big?.src,
-  ...(data.venues?.data?.map(v => v.image_small?.src).filter(Boolean) || [])
-].filter(Boolean)
+    data.image_big?.src,
+    ...(data.venues?.data?.map(v => v.image_small?.src).filter(Boolean) || [])
+  ].filter(Boolean)
   const mapped = {
     id: String(data.id),
     title: data.name ?? '',
@@ -27,9 +27,8 @@ export const transformPlatinumlistToEvent = (data: PlatinumlistEvent): Event => 
     images: images,
     tickets_available: data.has_tickets && data.has_sales_started && data.status != "sold out" ? "Yes" : "No",
     source: 'platinumlist',
-    url: data.url ? process.env.PLATINUMLIST_AFFILIATE_URL+data.url : null,
+    url: data.url ? process.env.PLATINUMLIST_AFFILIATE_URL + data.url : null,
     created_at: new Date().toISOString(),
   }
-
   return EventRow.parse(mapped)
 }

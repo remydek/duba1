@@ -10,6 +10,5 @@ export interface PlatinumlistQueryParams {
   status?: "approved" | "on sale" | "pre-register" | "pre-sale" | "sold out";
   per_page?: number;
   page?: number;
-  include?: string;
   sort?: string;
 }

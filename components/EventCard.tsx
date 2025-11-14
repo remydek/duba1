@@ -33,6 +33,9 @@ export function EventCard({ event }: EventCardProps) {
         currency: 'AED',
         minimumFractionDigits: 0,
       }).format(event.price_aed)
+      function createMarkup() {
+          return { __html: event.description || ''};
+          }
   return (
     <Card className="overflow-hidden hover:border-primary transition-colors group p-0"> 
       <div className="relative h-64 w-full overflow-hidden bg-muted">
@@ -88,9 +91,7 @@ export function EventCard({ event }: EventCardProps) {
           )}
         </div>
 
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-          {event.description}
-        </p>
+        <div className="text-sm text-muted-foreground line-clamp-6 mb-4" dangerouslySetInnerHTML={createMarkup()} />
       </CardContent>
 
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
