@@ -22,7 +22,6 @@ export async function GET(req: Request) {
     status: params.status as "approved" | "on sale" | "pre-register" | "pre-sale" | "sold out",
     per_page: params.per_page ? Number(params.per_page) : 10,
     page: params.page ? Number(params.page) : 1,
-    include: "price,score,venues,instructions,event_type",
     sort: "-rating",
   });
 
