@@ -1,16 +1,20 @@
 import { Ticket, Calendar, TrendingUp } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EventCard } from '@/components/EventCard'
-import { EventPublicService } from '@/services/public/events'
+import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 import type { Event } from '@/schemas/event'
 
 export default async function EventsPage() {
-  const eventPublicService = new EventPublicService()
-  const [{data: allEventsData}, {data: todayEvents}, {data: weekEvents}] = await Promise.all([
-    eventPublicService.getAllEvents(),
-    eventPublicService.getTodayEvents(),
-    eventPublicService.getThisWeekEvents(),
+  const eventPublicService = new PlatinumListService()
+  const [{data: allEventsData}] = await Promise.all([
+    eventPublicService.getEvents(),
   ])
+  const todayEvents = allEventsData.filter((event: Event) => event.event_date === new Date().toISOString().split('T')[0])
+  const weekEvents = allEventsData.filter((event: Event) => {
+    const eventDate = new Date(event.event_date)
+    const today = new Date()
+    return eventDate >= today && eventDate <= new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
+  })
   return (
     <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">

@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { Event } from '@/schemas/event'
+import Link from 'next/link'
 
 interface EventCardProps {
   event: Event
@@ -25,21 +26,26 @@ export function EventCard({ event }: EventCardProps) {
     minute: '2-digit'
   })
 
-  const priceFormatted = new Intl.NumberFormat('en-AE', {
-    style: 'currency',
-    currency: 'AED',
-    minimumFractionDigits: 0,
-  }).format(event.price_aed)
+  const priceFormatted = typeof event.price_aed === 'string'
+    ? event.price_aed
+    : new Intl.NumberFormat('en-AE', {
+      style: 'currency',
+      currency: 'AED',
+      minimumFractionDigits: 0,
+    }).format(event.price_aed)
+  function createMarkup() {
+    return { __html: event.description || '' };
+  }
   return (
-    <Card className="overflow-hidden hover:border-primary transition-colors group p-0"> 
+    <Card className="overflow-hidden hover:border-primary transition-colors group p-0">
       <div className="relative h-64 w-full overflow-hidden bg-muted">
         <Image
           src={
-              typeof event.images === 'string'
-                  ? event.images
-                  : Array.isArray(event.images) && event.images.length
-                      ? event.images[0]
-                      : '/placeholder.jpg'
+            typeof event.images === 'string'
+              ? event.images
+              : Array.isArray(event.images) && event.images.length
+                ? event.images[0]
+                : '/placeholder.jpg'
           }
           alt={event.title}
           fill
@@ -49,12 +55,12 @@ export function EventCard({ event }: EventCardProps) {
         />
         {event.category && (
           <Badge className="absolute top-3 right-3 bg-primary/90 backdrop-blur-sm">
-            {event.category}
+            {event.category && event.category.toUpperCase()}
           </Badge>
         )}
         {event.source && (
           <Badge className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground">
-            {event.source}
+            {event.source.toUpperCase()}
           </Badge>
         )}
       </div>
@@ -85,9 +91,7 @@ export function EventCard({ event }: EventCardProps) {
           )}
         </div>
 
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-          {event.description}
-        </p>
+        <div className="text-sm text-muted-foreground line-clamp-6 mb-4" dangerouslySetInnerHTML={createMarkup()} />
       </CardContent>
 
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
@@ -95,9 +99,11 @@ export function EventCard({ event }: EventCardProps) {
           <Ticket className="h-4 w-4 text-primary" />
           <span className="text-lg font-bold text-primary">{priceFormatted}</span>
         </div>
-        <Button size="sm">
-          Book Now
-        </Button>
+        <Link href={`${event.url}`} target='_blank' className="text-primary hover:underline">
+          <Button size="sm" className='cursor-pointer hover:bg-amber-600'>
+            Book Now
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   )

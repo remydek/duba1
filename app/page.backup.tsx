@@ -12,7 +12,7 @@ import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
 import { getTopCoins } from '@/repository/public/coingecko'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
 import { PropertyPublicService } from '@/services/public/properties'
-import { PlatinumListService } from '@/services/private/platinumListPrivateService'
+import { EventPublicService } from '@/services/public/events'
 import { SupercarPublicService } from '@/services/public/supercars'
 import { YachtPublicService } from '@/services/public/yachts'
 
@@ -26,27 +26,23 @@ async function getCoins() {
 }
 
 export default async function HomePage() {
-  const eventPlatinumListPrivateService = new PlatinumListService()
+  const eventPublicService = new EventPublicService()
   const propertyPublicService = new PropertyPublicService()
   const supercarPublicService = new SupercarPublicService()
   const yachtPublicService = new YachtPublicService()
-  const [{ data:featuredProperties }, { data: featuredEvents, count: eventCount, meta: eventMeta}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
+  const [{ data:featuredProperties }, { data: featuredEvents}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
     propertyPublicService.getFeaturedProperties(),
-    eventPlatinumListPrivateService.getEvents({
-    start_from: Date.now() / 1000,
-    per_page: 11,
-    page: 1,
-    sort: "-rating",
-}),
+    eventPublicService.getFeaturedEvents(),
     supercarPublicService.getFeaturedSupercars(),
     yachtPublicService.getFeaturedYachts(),
     getCoins()
   ])
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      {/* <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
-        Background Image Slideshow with Overlay
+      <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
+        {/* Background Image Slideshow with Overlay */}
         <HeroSlideshow />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -62,10 +58,10 @@ export default async function HomePage() {
               Events • Properties • Supercars • Yachts
             </p>
 
-            Quick Crypto Calculator
+            {/* Quick Crypto Calculator */}
             <HeroCalculator coins={coins} />
 
-            Search Bar
+            {/* Search Bar */}
             <div className="inline-block bg-card/50 backdrop-blur-md border border-primary/30 rounded-xl p-4 shadow-[0_0_25px_-5px_rgba(212,175,55,0.3)] w-[600px] max-w-full">
               <div className="flex gap-2 items-center">
                 <div className="flex items-center gap-2 bg-background/80 backdrop-blur rounded-lg px-3 py-2 border-primary/20 flex-1">
@@ -84,10 +80,10 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Quick Links */}
-      {/* <section className="py-12 border-y border-border">
+      <section className="py-12 border-y border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link href="/events" className="group">
@@ -151,19 +147,19 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Featured Events */}
-      {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} />}
-{/* 
-      Featured Supercars
+      {<FeaturedEventsSection events={featuredEvents} />}
+
+      {/* Featured Supercars */}
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
 
-      Featured Properties
+      {/* Featured Properties */}
       <FeaturedPropertiesSection properties={featuredProperties} coins={coins} />
 
-      Featured Yachts
-      <FeaturedYachtsSection yachts={featuredYachts} coins={coins} /> */}
+      {/* Featured Yachts */}
+      <FeaturedYachtsSection yachts={featuredYachts} coins={coins} />
     </div>
   )
 }
