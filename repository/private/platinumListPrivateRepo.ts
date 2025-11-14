@@ -21,13 +21,16 @@ export class PlatinumListPrivateRepo {
 
   async getPlatinumListEvents(params: PlatinumlistQueryParams) {
     const url = this.buildQuery(params);
-    console.log(url);
     const res = await fetch(url, {
       headers: {
         "Api-Key": `${process.env.PLATINUMLIST_API_KEY}`,
         "Content-Type": "application/json",
       },
-    });
+      cache: "force-cache",
+      next: {
+        revalidate: 120,
+      },
+    },);
     return res.json();
   }
 }
