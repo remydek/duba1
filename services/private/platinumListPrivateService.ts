@@ -10,7 +10,6 @@ export class PlatinumListService {
   constructor(private repo: PlatinumListPrivateRepo = new PlatinumListPrivateRepo()) { }
 
   async getEvents(params: PlatinumlistQueryParams = platinum_list_params): Promise<{ data: Event[], count?: number, meta?: PlatinumlistMeta }> {
-    console.log("params", params)
     const raw = await this.repo.getPlatinumListEvents(params);
     if (raw.error) {
       return {
