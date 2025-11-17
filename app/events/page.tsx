@@ -115,7 +115,7 @@ export default async function EventsPage({
           {/* Need to make this Infinite Scroll */}
           <TabsContent value="all">
 
-            {/* <AllEventsClient initial={allEventsData} meta={allEventsMeta} /> */}
+            <AllEventsClient initial={allEventsData} meta={allEventsMeta} />
 
           </TabsContent>
         </Tabs>
