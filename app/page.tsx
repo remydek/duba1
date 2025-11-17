@@ -32,12 +32,7 @@ export default async function HomePage() {
   const yachtPublicService = new YachtPublicService()
   const [{ data:featuredProperties }, { data: featuredEvents, count: eventCount, meta: eventMeta}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
     propertyPublicService.getFeaturedProperties(),
-    eventPlatinumListPrivateService.getEvents({
-    start_from: Date.now() / 1000,
-    per_page: 10,
-    page: 1,
-    sort: "-rating",
-}),
+    eventPlatinumListPrivateService.getEvents(),
     supercarPublicService.getFeaturedSupercars(),
     yachtPublicService.getFeaturedYachts(),
     getCoins()
