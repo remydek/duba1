@@ -8,7 +8,7 @@ export default async function HomePage() {
   ])
   return (
     <div className="min-h-screen">
-      {<FeaturedEventsSection events={featuredEvents} />}
+      {/* {<FeaturedEventsSection events={featuredEvents} />} */}
     </div>
   )
 }
