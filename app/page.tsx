@@ -1,46 +1,30 @@
-import Link from 'next/link'
-import { ArrowRight, Bitcoin, Search, Building, Ship, Car, Ticket } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { HeroCalculator } from '@/components/HeroCalculator'
-import { FeaturedPropertiesSection } from '@/components/FeaturedPropertiesSection'
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
-import { FeaturedSupercarsSection } from '@/components/FeaturedSupercarsSection'
-import { FeaturedYachtsSection } from '@/components/FeaturedYachtsSection'
-import { getTopCoins } from '@/repository/public/coingecko'
-import { HeroSlideshow } from '@/components/HeroSlideshow'
-import { PropertyPublicService } from '@/services/public/properties'
+// import { getTopCoins } from '@/repository/public/coingecko'
+// import { PropertyPublicService } from '@/services/public/properties'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
-import { SupercarPublicService } from '@/services/public/supercars'
-import { YachtPublicService } from '@/services/public/yachts'
+// import { SupercarPublicService } from '@/services/public/supercars'
+// import { YachtPublicService } from '@/services/public/yachts'
 
-async function getCoins() {
-  try {
-    return await getTopCoins()
-  } catch (error) {
-    console.error('Error fetching coins:', error)
-    return []
-  }
-}
+// async function getCoins() {
+//   try {
+//     return await getTopCoins()
+//   } catch (error) {
+//     console.error('Error fetching coins:', error)
+//     return []
+//   }
+// }
 
 export default async function HomePage() {
   const eventPlatinumListPrivateService = new PlatinumListService()
-  const propertyPublicService = new PropertyPublicService()
-  const supercarPublicService = new SupercarPublicService()
-  const yachtPublicService = new YachtPublicService()
-  const [{ data:featuredProperties }, { data: featuredEvents, count: eventCount, meta: eventMeta}, { data:featuredSupercars}, { data:featuredYachts}, coins] = await Promise.all([
-    propertyPublicService.getFeaturedProperties(),
-    eventPlatinumListPrivateService.getEvents({
-    start_from: Date.now() / 1000,
-    per_page: 10,
-    page: 1,
-    sort: "-rating",
-}),
-    supercarPublicService.getFeaturedSupercars(),
-    yachtPublicService.getFeaturedYachts(),
-    getCoins()
+  // const propertyPublicService = new PropertyPublicService()
+  // const supercarPublicService = new SupercarPublicService()
+  // const yachtPublicService = new YachtPublicService()
+  const [{ data: featuredEvents}] = await Promise.all([
+    // propertyPublicService.getFeaturedProperties(),
+    eventPlatinumListPrivateService.getEvents(),
+    // supercarPublicService.getFeaturedSupercars(),
+    // yachtPublicService.getFeaturedYachts(),
+    // getCoins()
   ])
   return (
     <div className="min-h-screen">
