@@ -3,14 +3,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EventCard } from '@/components/EventCard'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 import type { Event } from '@/schemas/event'
-
-export default async function EventsPage() {
+import AllEventsClient from './AllEventsClient'
+export default async function EventsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const eventPublicService = new PlatinumListService()
-  const [{data: allEventsData}] = await Promise.all([
+  const [{ data: allEventsData, meta: allEventsMeta }, { data: todayEvent }] = await Promise.all([
+    eventPublicService.getEvents(Object.keys(await searchParams).length ? await searchParams : undefined),
     eventPublicService.getEvents(),
   ])
-  const todayEvents = allEventsData.filter((event: Event) => event.event_date === new Date().toISOString().split('T')[0])
-  const weekEvents = allEventsData.filter((event: Event) => {
+  const todayEvents = todayEvent.filter((event: Event) => event.event_date === new Date().toISOString().split('T')[0])
+  const weekEvents = todayEvent.filter((event: Event) => {
     const eventDate = new Date(event.event_date)
     const today = new Date()
     return eventDate >= today && eventDate <= new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
@@ -107,18 +112,11 @@ export default async function EventsPage() {
           </TabsContent>
 
           {/* ALL EVENTS */}
+          {/* Need to make this Infinite Scroll */}
           <TabsContent value="all">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2">All Upcoming Events</h2>
-              <p className="text-muted-foreground">
-                Browse our complete collection of exclusive Dubai events
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allEventsData.map((event: Event) => (
-                <EventCard key={event.id} event={event} />
-              ))}
-            </div>
+
+            <AllEventsClient initial={allEventsData} meta={allEventsMeta} />
+
           </TabsContent>
         </Tabs>
       </div>

@@ -7,12 +7,17 @@ import type { Event } from "@/schemas/event";
 
 
 export class PlatinumListService {
-  constructor(private repo: PlatinumListPrivateRepo = new PlatinumListPrivateRepo()) {}
+  constructor(private repo: PlatinumListPrivateRepo = new PlatinumListPrivateRepo()) { }
 
   async getEvents(params: PlatinumlistQueryParams = platinum_list_params): Promise<{ data: Event[], count?: number, meta?: PlatinumlistMeta }> {
+    console.log("params", params)
     const raw = await this.repo.getPlatinumListEvents(params);
     if (raw.error) {
-      return raw.error
+      return {
+        data: [],
+        count: 0,
+        meta: {} as PlatinumlistMeta
+      }
     }
     const data = await raw.data.map(transformPlatinumlistToEvent)
     return {
