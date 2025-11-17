@@ -138,7 +138,7 @@ export default async function HomePage() {
       </section> */}
 
       {/* Featured Events */}
-      {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} />}
+      {<FeaturedEventsSection events={featuredEvents} />}
 {/* 
       Featured Supercars
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
