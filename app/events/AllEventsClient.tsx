@@ -1,51 +1,55 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { EventCard } from '@/components/EventCard'
 import type { Event } from '@/schemas/event'
 
-/* eslint-disable @typescript-eslint/no-explicit-any*/
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AllEventsClient({ initial, meta }: { initial: Event[], meta: any }) {
-  const [events, setEvents] = useState(initial)
-  const [page, setPage] = useState(meta.pagination.current_page)
-  const [loading, setLoading] = useState(false)
-  const loader = useRef<HTMLDivElement | null>(null)
+    const [events, setEvents] = useState(initial)
+    const [page, setPage] = useState(meta.pagination.current_page)
+    const [loading, setLoading] = useState(false)
+    const loader = useRef<HTMLDivElement | null>(null)
 
-  async function loadMore() {
-    if (loading || page >= meta.pages) return
-    setLoading(true)
-    try {
-      const res = await fetch(`/api/platinumlist/events?page=${page + 1}&per_page=${meta.pagination.per_page}`)
-      const data = await res.json()
-      setEvents(prev => [...prev, ...data.data])
-      setPage(data.meta.pagination.current_page)
-    } finally {
-      setLoading(false)
-    }
-  }
+    const loadMore = useCallback(async () => {
+        if (loading) return
+        if (page >= meta.pages) return
+        setLoading(true)
 
-  useEffect(() => {
-    if (!loader.current) return
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) loadMore()
-    })
-    observer.observe(loader.current)
-    return () => observer.disconnect()
-  }, [])
+        const response = await fetch(`/api/platinumlist/events?page=${page + 1}&per_page=${meta.pagination.per_page}`)
+        const data = await response.json()
 
-  return (
-    <>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-2">All Upcoming Events</h2>
-        <p className="text-muted-foreground">Browse our complete collection of exclusive Dubai events</p>
-      </div>
+        setEvents(prev => [...prev, ...data.data])
+        setPage(data.meta.pagination.current_page)
+        setLoading(false)
+    }, [loading, page, meta.pages, meta.pagination.per_page])
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map(event => <EventCard key={event.id} event={event} />)}
-      </div>
+    useEffect(() => {
+        if (!loader.current) return
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                loadMore()
+            }
+        }, { threshold: 0.5 })
 
-      <div ref={loader} className="py-10 text-center">
-        {loading && <span>Loading...</span>}
-      </div>
-    </>
-  )
+        observer.observe(loader.current)
+        return () => observer.disconnect()
+    }, [loadMore])
+
+    return (
+        <>
+            <div className="mb-6">
+                <h2 className="text-2xl font-bold mb-2">All Upcoming Events</h2>
+                <p className="text-muted-foreground">Browse our complete collection of exclusive Dubai events</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {events.map(event => <EventCard key={event.id} event={event} />)}
+            </div>
+
+            <div ref={loader} className="py-10 text-center">
+                {loading && <span>Loading...</span>}
+            </div>
+        </>
+    )
 }

@@ -2,12 +2,10 @@ import { Ticket, Calendar, TrendingUp } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EventCard } from '@/components/EventCard'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
-import type { Event } from '@/schemas/event'
+
 import AllEventsClient from './AllEventsClient'
 
-function formatDateUTC(date: string) {
-  return new Date(date).toISOString().split('T')[0]
-}
+
 
 export default async function EventsPage({
   searchParams,
@@ -16,20 +14,12 @@ export default async function EventsPage({
 }) {
   const eventService = new PlatinumListService()
 
-  const [{ data: allEventsData, meta: allEventsMeta }, { data: todayEvent }] = await Promise.all([
+  const [{ data: allEventsData, meta: allEventsMeta }, { data: todayEvents }, { data: weekEvents }] = await Promise.all([
     eventService.getEvents(Object.keys(await searchParams).length ? await searchParams : undefined),
-    eventService.getEvents(),
+    eventService.getToday(),
+    eventService.getWeeklyEvents(),
   ])
 
-  const todayUTC = new Date().toISOString().split('T')[0]
-
-  const todayEvents = todayEvent.filter(event => formatDateUTC(event.event_date) === todayUTC)
-
-  const weekEvents = todayEvent.filter(event => {
-    const eventDate = new Date(formatDateUTC(event.event_date))
-    const today = new Date(todayUTC)
-    return eventDate >= today && eventDate <= new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
-  })
 
   return (
     <div className="min-h-screen py-12">
