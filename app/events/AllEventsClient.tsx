@@ -16,36 +16,29 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
         if (page >= meta.pages) return
         setLoading(true)
 
-        // cancel. since we dont have any Auth. Infinite scrolling is bad making this SSR reactive instead
-        // const response = await fetch(`/api/platinumlist/events?page=${page + 1}&per_page=${meta.pagination.per_page}`)
-        // const data = await response.json()
-        // setEvents([...events, ...data.data])
-        // setPage(data.meta.pagination.current_page)
-        window.location.href = `/events?page=${page + 1}&per_page=${meta.pagination.per_page}`
-        setLoading(false)
-    }
-    async function loadPrevious() {
-        if (loading) return
-        if (page <= 1) return
-        setLoading(true)
-        window.location.href = `/events?page=${page - 1}&per_page=${meta.pagination.per_page}`
-        setLoading(false)
-    }
-    // Canceled Infinite Scrolling
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver(entries => {
-    //         if (entries[0].isIntersecting) {
-    //             loadMore()
-    //         }
-    //     })
-    //     if (loader.current) {
-    //         observer.observe(loader.current)
-    //     }
-    //     return () => {
-    //         observer.disconnect()
-    //     }
+        const response = await fetch(`/api/platinumlist/events?page=${page + 1}&per_page=${meta.pagination.per_page}`)
+        const data = await response.json()
+        setEvents([...events, ...data.data])
+        setPage(data.meta.pagination.current_page)
 
-    // }, [loader.current])
+        setLoading(false)
+    }
+
+    // Canceled Infinite Scrolling
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                loadMore()
+            }
+        })
+        if (loader.current) {
+            observer.observe(loader.current)
+        }
+        return () => {
+            observer.disconnect()
+        }
+
+    }, [loader.current])
 
     return (
         <>
@@ -60,16 +53,10 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
                     <EventCard key={event.id} event={event} />
                 ))}
             </div>
-            <div className="py-10 text-center">
-                <div className="flex justify-center">
-                    <Button onClick={loadPrevious} variant="outline">Load Previous</Button>
-                    <Button onClick={loadMore} variant="default">Load Next</Button>
 
-                </div>
-            </div>
-            {/* <div ref={loader} className="py-10 text-center">
+            <div ref={loader} className="py-10 text-center">
                 {loading && <span>Loading...</span>}
-            </div> */}
+            </div>
         </>
     )
 }
