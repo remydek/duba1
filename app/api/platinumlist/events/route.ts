@@ -25,5 +25,5 @@ export async function GET(req: Request) {
     sort: "-rating",
   });
 
-  return NextResponse.json(data);
+  return NextResponse.json({ data: data.data, count: data.count, meta: data.meta });
 }

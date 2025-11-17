@@ -34,7 +34,7 @@ export default async function HomePage() {
     propertyPublicService.getFeaturedProperties(),
     eventPlatinumListPrivateService.getEvents({
     start_from: Date.now() / 1000,
-    per_page: 11,
+    per_page: 10,
     page: 1,
     sort: "-rating",
 }),
