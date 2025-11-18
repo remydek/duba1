@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { Event } from '@/schemas/event'
 import Link from 'next/link'
-
+import { PriceDisplay } from './PriceDisplay'
 interface EventCardProps {
   event: Event
 }
@@ -95,7 +95,10 @@ export function EventCard({ event }: EventCardProps) {
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Ticket className="h-4 w-4 text-primary" />
-          <span className="text-lg font-bold text-primary">{priceFormatted}</span>
+          <span className="text-lg font-bold text-primary">
+            <PriceDisplay priceAED={typeof event.price_aed === 'string' ? 0 : event.price_aed} showCrypto={false} />
+            {/* {priceFormatted} */}
+            </span>
         </div>
         <Link href={`${event.url}`} target='_blank' className="text-primary hover:underline">
           <Button size="sm" className='cursor-pointer hover:bg-amber-600'>

@@ -86,3 +86,4 @@ export type PlatinumlistResponse = z.infer<typeof platinumlistResponseSchema>;
 
 export type PlatinumlistEvent = z.infer<typeof eventSchema>;
 export type PlatinumlistMeta = z.infer<typeof metaSchema>;
+export type PlatinumlistPagination  = z.infer<typeof paginationSchema>;

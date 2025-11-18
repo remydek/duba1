@@ -24,6 +24,5 @@ export async function GET(req: Request) {
     page: params.page ? Number(params.page) : 1,
     sort: "-rating",
   });
-
   return NextResponse.json({ data: data.data, count: data.count, meta: data.meta });
 }
