@@ -8,10 +8,12 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
   const [events, setEvents] = useState(initial)
   const [page, setPage] = useState(meta.pagination.current_page)
   const [loading, setLoading] = useState(false)
+  const loadingRef = useRef(false)
   const loader = useRef<HTMLDivElement | null>(null)
 
   const loadMore = useCallback(async () => {
-    if (loading || page >= meta.pagination.total_pages) return
+    if (loadingRef.current || page >= meta.pagination.total_pages) return
+    loadingRef.current = true
     setLoading(true)
     try {
       const res = await fetch(`/api/platinumlist/events?page=${page + 1}&per_page=${meta.pagination.per_page}`)
@@ -19,15 +21,14 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
       startTransition(() => {
         setEvents(prev => [...prev, ...data.data])
         setPage(data.meta.pagination.current_page)
-
       })
     } catch (error) {
       console.error(error)
-    }
-    finally {
+    } finally {
+      loadingRef.current = false
       setLoading(false)
     }
-  }, [loading, page, meta.pagination.total_pages, meta.pagination.per_page])
+  }, [page, meta.pagination.total_pages, meta.pagination.per_page])
 
   useEffect(() => {
     if (!loader.current) return
