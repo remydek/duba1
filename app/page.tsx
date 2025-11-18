@@ -1,30 +1,30 @@
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
-// import { getTopCoins } from '@/repository/public/coingecko'
+import { getTopCoins } from '@/repository/public/coingecko'
 // import { PropertyPublicService } from '@/services/public/properties'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 // import { SupercarPublicService } from '@/services/public/supercars'
 // import { YachtPublicService } from '@/services/public/yachts'
 
-// async function getCoins() {
-//   try {
-//     return await getTopCoins()
-//   } catch (error) {
-//     console.error('Error fetching coins:', error)
-//     return []
-//   }
-// }
+async function getCoins() {
+  try {
+    return await getTopCoins()
+  } catch (error) {
+    console.error('Error fetching coins:', error)
+    return []
+  }
+}
 
 export default async function HomePage() {
   const eventPlatinumListPrivateService = new PlatinumListService()
   // const propertyPublicService = new PropertyPublicService()
   // const supercarPublicService = new SupercarPublicService()
   // const yachtPublicService = new YachtPublicService()
-  const [{ data: featuredEvents}] = await Promise.all([
+  const [{ data: featuredEvents}, coins] = await Promise.all([
     // propertyPublicService.getFeaturedProperties(),
     eventPlatinumListPrivateService.getEvents(),
     // supercarPublicService.getFeaturedSupercars(),
     // yachtPublicService.getFeaturedYachts(),
-    // getCoins()
+    getCoins()
   ])
   return (
     <div className="min-h-screen">
@@ -138,7 +138,7 @@ export default async function HomePage() {
       </section> */}
 
       {/* Featured Events */}
-      {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} />}
+      {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} coins={coins} />}
 {/* 
       Featured Supercars
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />

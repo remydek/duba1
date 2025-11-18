@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, startTransition, useCallback } from 'react'
 import { EventCard } from '@/components/EventCard'
 import type { Event } from '@/schemas/event'
 
@@ -10,18 +10,24 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
   const [loading, setLoading] = useState(false)
   const loader = useRef<HTMLDivElement | null>(null)
 
-  async function loadMore() {
-    if (loading || page >= meta.pages) return
+  const loadMore = useCallback(async () => {
+    if (loading || page >= meta.pagination.total_pages) return
     setLoading(true)
     try {
       const res = await fetch(`/api/platinumlist/events?page=${page + 1}&per_page=${meta.pagination.per_page}`)
       const data = await res.json()
-      setEvents(prev => [...prev, ...data.data])
-      setPage(data.meta.pagination.current_page)
-    } finally {
+      startTransition(() => {
+        setEvents(prev => [...prev, ...data.data])
+        setPage(data.meta.pagination.current_page)
+
+      })
+    } catch (error) {
+      console.error(error)
+    }
+    finally {
       setLoading(false)
     }
-  }
+  }, [loading, page, meta.pagination.total_pages, meta.pagination.per_page])
 
   useEffect(() => {
     if (!loader.current) return
@@ -30,7 +36,7 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
     })
     observer.observe(loader.current)
     return () => observer.disconnect()
-  }, [])
+  }, [loadMore])
 
   return (
     <>

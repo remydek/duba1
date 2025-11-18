@@ -26,6 +26,7 @@ export class PlatinumListPrivateRepo {
         headers: {
           "Api-Key": `${process.env.PLATINUMLIST_API_KEY}`,
           "Content-Type": "application/json",
+          "Api-Currency": "AED",
         },
         cache: "force-cache",
         next: {
