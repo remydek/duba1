@@ -150,7 +150,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Events */}
-      {<FeaturedEventsSection events={featuredEvents} />}
+      {<FeaturedEventsSection events={featuredEvents} coins={coins} />}
 
       {/* Featured Supercars */}
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
