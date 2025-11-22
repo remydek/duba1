@@ -14,7 +14,6 @@ const formatDate = () => {
 
 const sign = (date: string, method: string, path: string) => {
     const base = `${date}${process.env.BOKUN_ACCESS_KEY}${method.toUpperCase()}${path}`
-    console.log(base)
     return crypto.createHmac('sha1', SECRET_KEY).update(base).digest('base64')
 }
 export class BokunPrivateRepository {
@@ -28,7 +27,7 @@ export class BokunPrivateRepository {
             signature
         })
     }
-    async getExperience(url: string, method: string = "GET") : Promise<Experience> {
+    async getExperience(url: string, method: string = "GET") : Promise<Experience[]> {
         try {
             const response = await this.setUpFetch(url!, method)
             const data = await response.json()

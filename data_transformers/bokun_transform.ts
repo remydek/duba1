@@ -4,7 +4,6 @@ import { Experience, ExperienceRow } from "@/schemas/experience"
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const transformBokuntoExperience = (data: any): Experience => {
     const experience_data = data.activity
-    console.log(experience_data.agendaItems)
     const location = experience_data.agendaItems
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map((i: any) => i.location.wholeAddress)

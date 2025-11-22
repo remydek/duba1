@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.platinumlist.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'bokun.s3.amazonaws.com',
+      },
     ],
   },
 };
