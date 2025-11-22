@@ -1,5 +1,8 @@
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
+import { FeaturedExperienceSection } from '@/components/FeaturedExperienceSection'
 import { getTopCoins } from '@/repository/public/coingecko'
+import { Experience } from '@/schemas/experience'
+import { BokunPrivateService } from '@/services/private/BokunPrivateService'
 // import { PropertyPublicService } from '@/services/public/properties'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 // import { SupercarPublicService } from '@/services/public/supercars'
@@ -16,16 +19,20 @@ async function getCoins() {
 
 export default async function HomePage() {
   const eventPlatinumListPrivateService = new PlatinumListService()
+  const experiencebokunPrivateService = new BokunPrivateService()
+
   // const propertyPublicService = new PropertyPublicService()
   // const supercarPublicService = new SupercarPublicService()
   // const yachtPublicService = new YachtPublicService()
-  const [{ data: featuredEvents}, coins] = await Promise.all([
+  const [{ data: featuredEvents}, featuredExperiences, coins] = await Promise.all([
     // propertyPublicService.getFeaturedProperties(),
     eventPlatinumListPrivateService.getEvents(),
+    experiencebokunPrivateService.getFeaturedExperiences(),
     // supercarPublicService.getFeaturedSupercars(),
     // yachtPublicService.getFeaturedYachts(),
     getCoins()
   ])
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -139,7 +146,12 @@ export default async function HomePage() {
 
       {/* Featured Events */}
       {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} coins={coins} />}
+      {/* Featured Experiences */}
+      {<FeaturedExperienceSection experiences={featuredExperiences} coins={coins} />}
+
+
 {/* 
+
       Featured Supercars
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
 

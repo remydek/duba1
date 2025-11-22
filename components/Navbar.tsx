@@ -14,6 +14,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: '/events', label: 'Events' },
+    { href: '/experiences', label: 'Experiences' },
     // { href: '/properties', label: 'Properties' },
     // { href: '/supercars', label: 'Supercars' },
     // { href: '/yachts', label: 'Yachts' },
