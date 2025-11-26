@@ -1,10 +1,14 @@
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
 import { FeaturedExperienceSection } from '@/components/FeaturedExperienceSection'
+import { HeroCalculator } from '@/components/HeroCalculator'
+import { HeroSlideshow } from '@/components/HeroSlideshow'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { getTopCoins } from '@/repository/public/coingecko'
-import { Experience } from '@/schemas/experience'
 import { BokunPrivateService } from '@/services/private/BokunPrivateService'
-// import { PropertyPublicService } from '@/services/public/properties'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
+import { ArrowRight, Badge, Bitcoin, Link, Search } from 'lucide-react'
+// import { PropertyPublicService } from '@/services/public/properties'
 // import { SupercarPublicService } from '@/services/public/supercars'
 // import { YachtPublicService } from '@/services/public/yachts'
 
@@ -36,7 +40,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      {/* <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
         Background Image Slideshow with Overlay
         <HeroSlideshow />
 
@@ -75,7 +79,7 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Quick Links */}
       {/* <section className="py-12 border-y border-border">
