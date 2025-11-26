@@ -47,9 +47,9 @@ export function ExperiencesClient({ experience, coins }: ExperiencesClientProps)
           <div className="sticky top-4 z-40 mb-8">
             <Card>
               <CardContent className="p-6">
-                {/* <div className="mb-4 flex justify-end">
+                <div className="mb-4 flex justify-end">
                   <PageCoinSelector coins={coins} />
-                </div> */}
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="md:col-span-1">
