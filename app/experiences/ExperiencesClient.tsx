@@ -4,12 +4,13 @@ import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { Search, Car } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import { PageCoinSelector } from '@/components/PageCoinSelector'
 import type { CoinGeckoData } from '@/repository/public/coingecko'
 import { Experience } from '@/schemas/experience'
 import { ExperienceCard } from '@/components/ExperienceCard'
+import debounce from 'lodash.debounce'
 
 interface ExperiencesClientProps {
   experience: Experience[]
@@ -17,16 +18,32 @@ interface ExperiencesClientProps {
 }
 
 export function ExperiencesClient({ experience, coins }: ExperiencesClientProps) {
-  const defaultCoin = coins.find(c => c.symbol === 'btc') || coins[0] || null
+  const defaultCoin: CoinGeckoData = coins.find(c => c.symbol === 'btc') || coins[0] || null
+  const [search, setSearch] = useState('')
   const [query, setQuery] = useState('')
+  const [minBudget, setMinBudget] = useState<number | ''>('')
+  const [maxBudget, setMaxBudget] = useState<number | ''>('')
 
-  const filtered = useMemo(() => {
-    const q = query.toLowerCase()
-    return experience.filter(e =>
+  const debounceSetQuery = useMemo(() => debounce((value: string) => setQuery(value), 500), [])
+  const handleSearch = (value: string) => {
+    setSearch(value)
+    debounceSetQuery(value)
+  }
+
+const filtered = useMemo(() => {
+  const q = query.toLowerCase()
+  return experience.filter(e => {
+    const matchesSearch =
       e.title.toLowerCase().includes(q) ||
       (e.description || '').toLowerCase().includes(q)
-    )
-  }, [query, experience])
+
+    const price = typeof e.price_aed === 'string' ? 0 : e.price_aed
+    const matchesMin = minBudget === '' || (price !== undefined && !isNaN(price) && price >= minBudget)
+    const matchesMax = maxBudget === '' || (price !== undefined && !isNaN(price) && price <= maxBudget)
+
+    return matchesSearch && matchesMin && matchesMax
+  })
+}, [query, experience, minBudget, maxBudget])
 
   return (
     <CurrencyProvider defaultCoin={defaultCoin}>
@@ -34,10 +51,7 @@ export function ExperiencesClient({ experience, coins }: ExperiencesClientProps)
         <div className="container mx-auto px-4">
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-3">
-              {/* <Car className="h-10 w-10 text-primary" /> */}
-              <h1 className="text-4xl md:text-5xl font-bold">
-                Experiences
-              </h1>
+              <h1 className="text-4xl md:text-5xl font-bold">Experiences</h1>
             </div>
             <p className="text-muted-foreground text-lg">
               Unique activities and curated experiences across Dubai. {experience.length} experiences available.
@@ -57,21 +71,34 @@ export function ExperiencesClient({ experience, coins }: ExperiencesClientProps)
                       <Search className="h-4 w-4 text-muted-foreground" />
                       <Input
                         placeholder="Search experience..."
-                        value={query}
-                        onChange={e => setQuery(e.target.value)}
+                        value={search}
+                        onChange={e => handleSearch(e.target.value)}
                         className="border-0 focus-visible:ring-0 px-0 bg-transparent"
                       />
-                    </div>
-                  </div>
-                  <div className="md:col-span-1">
-                    <div className="flex items-center gap-2 rounded-lg px-3 py-2 border border-border">
-                      <Input className="border-0 focus-visible:ring-0 px-0 bg-transparent" placeholder="Min Budget (AED)" type="number" />
                     </div>
                   </div>
 
                   <div className="md:col-span-1">
                     <div className="flex items-center gap-2 rounded-lg px-3 py-2 border border-border">
-                      <Input className="border-0 focus-visible:ring-0 px-0 bg-transparent" placeholder="Max Budget (AED)" type="number" />
+                      <Input
+                        type="number"
+                        placeholder="Min Budget (AED)"
+                        value={minBudget}
+                        onChange={e => setMinBudget(e.target.value ? Number(e.target.value) : '')}
+                        className="border-0 focus-visible:ring-0 px-0 bg-transparent"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-1">
+                    <div className="flex items-center gap-2 rounded-lg px-3 py-2 border border-border">
+                      <Input
+                        type="number"
+                        placeholder="Max Budget (AED)"
+                        value={maxBudget}
+                        onChange={e => setMaxBudget(e.target.value ? Number(e.target.value) : '')}
+                        className="border-0 focus-visible:ring-0 px-0 bg-transparent"
+                      />
                     </div>
                   </div>
                 </div>

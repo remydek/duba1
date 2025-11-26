@@ -72,7 +72,7 @@ export default async function HomePage() {
                 </div>
                 <Button asChild size="sm">
                   <Link href="/properties">
-                    Search <ArrowRight className="ml-1 h-3 w-3" />
+                    Search  <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
                 </Button>
               </div>
