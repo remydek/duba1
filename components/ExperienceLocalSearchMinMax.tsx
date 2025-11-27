@@ -3,7 +3,7 @@
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import { Card, CardContent } from './ui/card'
 import { PageCoinSelector } from './PageCoinSelector'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import debounce from 'lodash.debounce'
@@ -21,7 +21,16 @@ export function LocalSearchMinMax({ children, experience, coins }: {
     const [query, setQuery] = useState('')
     const [minBudget, setMinBudget] = useState<number | ''>('')
     const [maxBudget, setMaxBudget] = useState<number | ''>('')
-
+    useEffect(() => {
+        if (typeof window === 'undefined') return
+        const urlParams = new URLSearchParams(window.location.search)
+        const searchParam = urlParams.get('search')
+        if (searchParam) {
+            setSearch(searchParam)
+            debounceSetQuery(searchParam)
+        }
+            
+    }, [])
     const debounceSetQuery = useMemo(
         () => debounce((value: string) => setQuery(value), 500),
         []

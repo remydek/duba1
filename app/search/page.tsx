@@ -1,9 +1,14 @@
-import { getTopCoins } from '@/repository/public/coingecko'
-import { SearchClient } from './SearchClient'
-import { PropertyPublicService } from '@/services/public/properties'
-import { YachtPublicService } from '@/services/public/yachts'
-import { SupercarPublicService } from '@/services/public/supercars'
+import { Ticket, Calendar, TrendingUp } from 'lucide-react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { EventCard } from '@/components/EventCard'
+import { PlatinumListService } from '@/services/private/platinumListPrivateService'
+import { CurrencyProvider } from '@/contexts/CurrencyContext'
 
+import { getTopCoins } from '@/repository/public/coingecko'
+import { ApiParamSearchMinMax } from '@/components/ApiParamSearchMinMax'
+import AllEventsClient from '../events/AllEventsClient'
+import { BokunPrivateService } from '@/services/private/BokunPrivateService'
+import { ExperiencesClient } from '../experiences/ExperiencesClient'
 async function getCoins() {
   try {
     return await getTopCoins()
@@ -13,30 +18,69 @@ async function getCoins() {
   }
 }
 
-export default async function SearchPage({
+function formatDateUTC(date: string) {
+  return new Date(date).toISOString().split('T')[0]
+}
+
+export default async function EventsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ categories?: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const params = await searchParams
-  const categories = params.categories?.split(',') || []
-  const propertyPublicService = new PropertyPublicService()
-  const yachtPublicService=  new  YachtPublicService()
-  const supercarPublicService=  new  SupercarPublicService()
-  const [{ data: properties}, { data:yachts }, { data:supercars }, coins] = await Promise.all([
-    propertyPublicService.getAllProperties(),
-    yachtPublicService.getAllYachts(),
-    supercarPublicService.getAllSupercars(),
-    getCoins()
+  const eventService = new PlatinumListService()
+  const bokunPrivateService = new BokunPrivateService()
+  const [{ data: allEventsData, meta: allEventsMeta }, coins, experience] = await Promise.all([
+    eventService.getEvents(Object.keys(await searchParams).length ? await searchParams : undefined),
+    getCoins(),
+    bokunPrivateService.getAllDubaiExperiences(),
   ])
 
+  const defaultCoin = coins.find(c => c.symbol === 'btc') || coins[0] || null
+
+
   return (
-    <SearchClient
-      properties={properties}
-      yachts={yachts}
-      supercars={supercars}
-      coins={coins}
-      selectedCategories={categories}
-    />
+
+    <CurrencyProvider defaultCoin={defaultCoin}>
+      <div className="min-h-screen py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+              <Ticket className="h-5 w-5" />
+              <span className="font-semibold">Premium Events</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Exclusive Dubai Events</h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Experience the best of Dubai&apos;s luxury lifestyle. From VIP concerts to exclusive galas, book your tickets with cryptocurrency.
+            </p>
+          </div>
+
+          <Tabs defaultValue="events" className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+
+              <TabsTrigger value="experience" className="flex items-center gap-2">
+                <Ticket className="h-4 w-4" />
+                All Experience
+              </TabsTrigger>
+
+              <TabsTrigger value="events" className="flex items-center gap-2">
+                <Ticket className="h-4 w-4" />
+                All Events
+              </TabsTrigger>
+            </TabsList>
+
+
+            <TabsContent value="experience">
+              <ExperiencesClient experience={experience} coins={coins} />
+            </TabsContent>
+
+            <TabsContent value="events">
+              <ApiParamSearchMinMax coins={coins} >
+                <AllEventsClient initial={allEventsData} meta={allEventsMeta} />
+              </ApiParamSearchMinMax>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </CurrencyProvider>
   )
 }

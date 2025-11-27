@@ -2,12 +2,11 @@ import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
 import { FeaturedExperienceSection } from '@/components/FeaturedExperienceSection'
 import { HeroCalculator } from '@/components/HeroCalculator'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import HomepageSearchClient from '@/components/HomepageSearchClient'
 import { getTopCoins } from '@/repository/public/coingecko'
 import { BokunPrivateService } from '@/services/private/BokunPrivateService'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
-import { ArrowRight, Badge, Bitcoin, Link, Search } from 'lucide-react'
+import { Badge, Bitcoin} from 'lucide-react'
 // import { PropertyPublicService } from '@/services/public/properties'
 // import { SupercarPublicService } from '@/services/public/supercars'
 // import { YachtPublicService } from '@/services/public/yachts'
@@ -60,23 +59,7 @@ export default async function HomePage() {
             Quick Crypto Calculator
             {/* Refactor needed */}
             <HeroCalculator coins={coins} />
-
-            <div className="inline-block bg-card/50 backdrop-blur-md border border-primary/30 rounded-xl p-4 shadow-[0_0_25px_-5px_rgba(212,175,55,0.3)] w-[600px] max-w-full">
-              <div className="flex gap-2 items-center">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur rounded-lg px-3 py-2 border-primary/20 flex-1">
-                  <Search className="h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search by location (e.g. Dubai Marina)"
-                    className="border-0 focus-visible:ring-0 px-0 flex-1"
-                  />
-                </div>
-                <Link href="/properties">
-                  <Button size="sm" className="shrink-0">
-                    Search <ArrowRight className="ml-1 h-3 w-3" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            <HomepageSearchClient />
           </div>
         </div>
       </section>
