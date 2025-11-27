@@ -28,7 +28,7 @@ export default async function HomePage() {
   // const propertyPublicService = new PropertyPublicService()
   // const supercarPublicService = new SupercarPublicService()
   // const yachtPublicService = new YachtPublicService()
-  const [{ data: featuredEvents}, featuredExperiences, coins] = await Promise.all([
+  const [{ data: featuredEvents }, featuredExperiences, coins] = await Promise.all([
     // propertyPublicService.getFeaturedProperties(),
     eventPlatinumListPrivateService.getEvents(),
     experiencebokunPrivateService.getFeaturedExperiences(),
@@ -58,9 +58,9 @@ export default async function HomePage() {
             </p>
 
             Quick Crypto Calculator
+            {/* Refactor needed */}
             <HeroCalculator coins={coins} />
 
-            Search Bar
             <div className="inline-block bg-card/50 backdrop-blur-md border border-primary/30 rounded-xl p-4 shadow-[0_0_25px_-5px_rgba(212,175,55,0.3)] w-[600px] max-w-full">
               <div className="flex gap-2 items-center">
                 <div className="flex items-center gap-2 bg-background/80 backdrop-blur rounded-lg px-3 py-2 border-primary/20 flex-1">
@@ -70,11 +70,11 @@ export default async function HomePage() {
                     className="border-0 focus-visible:ring-0 px-0 flex-1"
                   />
                 </div>
-                <Button asChild size="sm">
-                  <Link href="/properties">
-                    Search  <ArrowRight className="ml-1 h-3 w-3" />
-                  </Link>
-                </Button>
+                <Link href="/properties">
+                  <Button size="sm" className="shrink-0">
+                    Search <ArrowRight className="ml-1 h-3 w-3" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default async function HomePage() {
       {<FeaturedExperienceSection experiences={featuredExperiences} coins={coins} />}
 
 
-{/* 
+      {/* 
 
       Featured Supercars
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
