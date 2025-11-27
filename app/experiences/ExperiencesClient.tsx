@@ -3,7 +3,7 @@
 import type { CoinGeckoData } from '@/repository/public/coingecko'
 import { Experience } from '@/schemas/experience'
 import { ExperienceCard } from '@/components/ExperienceCard'
-import { LocalSearchMinMax } from '@/components/LocalSearchMinMax'
+import { LocalSearchMinMax } from '@/components/ExperienceLocalSearchMinMax'
 
 interface ExperiencesClientProps {
   experience: Experience[]
