@@ -46,11 +46,13 @@ export default async function EventsPage({
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
               <Ticket className="h-5 w-5" />
-              <span className="font-semibold">Premium Events</span>
+              <span className="font-semibold">Listings</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Exclusive Dubai Events</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Events & Experiences
+            </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Experience the best of Dubai&apos;s luxury lifestyle. From VIP concerts to exclusive galas, book your tickets with cryptocurrency.
+              Browse and book available events and experiences. Check availability, details, and pricing in real time.
             </p>
           </div>
 
