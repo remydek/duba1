@@ -6,6 +6,7 @@ import AllEventsClient from './AllEventsClient'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 
 import { getTopCoins } from '@/repository/public/coingecko'
+import { ApiParamSearchMinMax } from '@/components/ApiParamSearchMinMax'
 async function getCoins() {
   try {
     return await getTopCoins()
@@ -115,7 +116,9 @@ export default async function EventsPage({
             </TabsContent>
 
             <TabsContent value="all">
+              <ApiParamSearchMinMax coins={coins} >
               <AllEventsClient initial={allEventsData} meta={allEventsMeta} />
+              </ApiParamSearchMinMax>
             </TabsContent>
           </Tabs>
         </div>

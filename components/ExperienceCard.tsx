@@ -65,8 +65,12 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Ticket className="h-4 w-4 text-primary" />
-          <span className="text-lg font-bold text-primary">
-            <PriceDisplay priceAED={typeof experience.price_aed === 'string' ? 0 : experience.price_aed} showCrypto={false} />
+          <span className="text-lg ">
+            <PriceDisplay
+                priceAED={typeof experience.price_aed === 'string' ? 0 : experience.price_aed}
+                className="text-2xl font-bold text-primary drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]"
+                cryptoClassName="text-xs text-white/70 mt-1 drop-shadow"
+              />
             </span>
         </div>
         <Link href={`${experience.url}`} target='_blank' className="text-primary hover:underline">

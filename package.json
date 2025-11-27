@@ -19,6 +19,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.545.0",
     "luxon": "^3.7.2",
     "next": "15.5.4",
@@ -32,6 +34,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/luxon": "^3.7.1",
     "@types/node": "^20",
     "@types/react": "^19",

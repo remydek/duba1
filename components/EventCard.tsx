@@ -96,7 +96,11 @@ export function EventCard({ event }: EventCardProps) {
         <div className="flex items-center gap-2">
           <Ticket className="h-4 w-4 text-primary" />
           <span className="text-lg font-bold text-primary">
-            <PriceDisplay priceAED={typeof event.price_aed === 'string' ? 0 : event.price_aed} showCrypto={false} />
+              <PriceDisplay
+                priceAED={typeof event.price_aed === 'string' ? 0 : event.price_aed}
+                className="text-2xl font-bold text-primary drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]"
+                cryptoClassName="text-xs text-white/70 mt-1 drop-shadow"
+              />
             {/* {priceFormatted} */}
             </span>
         </div>

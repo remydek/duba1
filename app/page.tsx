@@ -1,10 +1,13 @@
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
 import { FeaturedExperienceSection } from '@/components/FeaturedExperienceSection'
+import { HeroCalculator } from '@/components/HeroCalculator'
+import { HeroSlideshow } from '@/components/HeroSlideshow'
+import HomepageSearchClient from '@/components/HomepageSearchClient'
 import { getTopCoins } from '@/repository/public/coingecko'
-import { Experience } from '@/schemas/experience'
 import { BokunPrivateService } from '@/services/private/BokunPrivateService'
-// import { PropertyPublicService } from '@/services/public/properties'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
+import { Badge, Bitcoin} from 'lucide-react'
+// import { PropertyPublicService } from '@/services/public/properties'
 // import { SupercarPublicService } from '@/services/public/supercars'
 // import { YachtPublicService } from '@/services/public/yachts'
 
@@ -24,7 +27,7 @@ export default async function HomePage() {
   // const propertyPublicService = new PropertyPublicService()
   // const supercarPublicService = new SupercarPublicService()
   // const yachtPublicService = new YachtPublicService()
-  const [{ data: featuredEvents}, featuredExperiences, coins] = await Promise.all([
+  const [{ data: featuredEvents }, featuredExperiences, coins] = await Promise.all([
     // propertyPublicService.getFeaturedProperties(),
     eventPlatinumListPrivateService.getEvents(),
     experiencebokunPrivateService.getFeaturedExperiences(),
@@ -36,7 +39,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      {/* <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-background via-background to-secondary/20 py-20 md:py-32 overflow-hidden">
         Background Image Slideshow with Overlay
         <HeroSlideshow />
 
@@ -54,28 +57,12 @@ export default async function HomePage() {
             </p>
 
             Quick Crypto Calculator
+            {/* Refactor needed */}
             <HeroCalculator coins={coins} />
-
-            Search Bar
-            <div className="inline-block bg-card/50 backdrop-blur-md border border-primary/30 rounded-xl p-4 shadow-[0_0_25px_-5px_rgba(212,175,55,0.3)] w-[600px] max-w-full">
-              <div className="flex gap-2 items-center">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur rounded-lg px-3 py-2 border-primary/20 flex-1">
-                  <Search className="h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search by location (e.g. Dubai Marina)"
-                    className="border-0 focus-visible:ring-0 px-0 flex-1"
-                  />
-                </div>
-                <Button asChild size="sm">
-                  <Link href="/properties">
-                    Search <ArrowRight className="ml-1 h-3 w-3" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+            <HomepageSearchClient />
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Quick Links */}
       {/* <section className="py-12 border-y border-border">
@@ -150,7 +137,7 @@ export default async function HomePage() {
       {<FeaturedExperienceSection experiences={featuredExperiences} coins={coins} />}
 
 
-{/* 
+      {/* 
 
       Featured Supercars
       <FeaturedSupercarsSection supercars={featuredSupercars} coins={coins} />
