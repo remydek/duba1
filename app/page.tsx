@@ -134,7 +134,7 @@ export default async function HomePage() {
       {/* Featured Events */}
       {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} coins={coins} />}
       {/* Featured Experiences */}
-      {<FeaturedExperienceSection experiences={featuredExperiences} coins={coins} />}
+      { featuredExperiences.length > 0 && <FeaturedExperienceSection experiences={featuredExperiences} coins={coins} /> }
 
 
       {/* 

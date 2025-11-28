@@ -42,7 +42,7 @@ export class BokunPrivateRepository {
             })
             const bokun_response = await bokun_fetch.json()
 
-            return bokun_response.items.map(transformBokuntoExperience)
+            return bokun_response.items ? bokun_response.items.map(transformBokuntoExperience) : []
         } catch (error) {
             console.error(error)
             throw error
