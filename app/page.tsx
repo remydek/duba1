@@ -132,7 +132,7 @@ export default async function HomePage() {
       </section> */}
 
       {/* Featured Events */}
-      {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} coins={coins} />}
+      { featuredEvents.length > 0 && <FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} coins={coins} />}
       {/* Featured Experiences */}
       { featuredExperiences.length > 0 && <FeaturedExperienceSection experiences={featuredExperiences} coins={coins} /> }
 
