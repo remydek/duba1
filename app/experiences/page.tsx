@@ -14,7 +14,7 @@ async function getCoins() {
 export default async function ExperiencesPage() {
   const bokunPrivateService = new BokunPrivateService()
   const [experience, coins] = await Promise.all([
-    bokunPrivateService.getAllDubaiExperiences(),
+    bokunPrivateService.getData(),
     getCoins()
   ])
 

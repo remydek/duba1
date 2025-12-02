@@ -1,6 +1,5 @@
-import { Ticket, Calendar, TrendingUp } from 'lucide-react'
+import { Ticket } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { EventCard } from '@/components/EventCard'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 
@@ -18,10 +17,6 @@ async function getCoins() {
   }
 }
 
-function formatDateUTC(date: string) {
-  return new Date(date).toISOString().split('T')[0]
-}
-
 export default async function EventsPage({
   searchParams,
 }: {
@@ -30,9 +25,9 @@ export default async function EventsPage({
   const eventService = new PlatinumListService()
   const bokunPrivateService = new BokunPrivateService()
   const [{ data: allEventsData, meta: allEventsMeta }, coins, experience] = await Promise.all([
-    eventService.getEvents(Object.keys(await searchParams).length ? await searchParams : undefined),
+    eventService.getData(Object.keys(await searchParams).length ? await searchParams : undefined),
     getCoins(),
-    bokunPrivateService.getAllDubaiExperiences(),
+    bokunPrivateService.getFeatured(),
   ])
 
   const defaultCoin = coins.find(c => c.symbol === 'btc') || coins[0] || null

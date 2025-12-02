@@ -20,11 +20,12 @@ export class MediaStackPrivateRepo {
   async getMediaStackNews(params: MediaStackQueryParams) {
     params = { ...params, access_key: this.apiKey, keywords: "Dubai" };
     const url = this.buildQuery(params);
+    console.log(url);
     try {
       const res = await fetch(url, {
         cache: "force-cache",
         next: {
-          revalidate: 3600,
+          revalidate: 21600, // 6 hours
         },
       },);
       return res.json();
