@@ -1,20 +1,21 @@
 'use client'
 import { useState, useEffect, useRef, startTransition, useCallback } from 'react'
-import { EventCard } from '@/components/EventCard'
-import type { Event } from '@/schemas/event'
-import { useSearchParams } from 'next/navigation'
+import { NewsCard } from '@/components/NewsCard'
+import { MediaStackPagination, NewsArticle } from '@/schemas/news'
+import { MediaStackFirstKey } from '@/interface/mediastack_query_params'
+import { useParams, useSearchParams } from 'next/navigation'
 import { buildQuery } from '@/utils/utils'
 
-/* eslint-disable @typescript-eslint/no-explicit-any*/
-export default function AllEventsClient({ initial, meta }: { initial: Event[], meta: any }) {
+
+export default function AllNewsClient({ initial, meta }: { initial: NewsArticle[], meta: MediaStackPagination }) {
   const [events, setEvents] = useState(initial)
-  const [page, setPage] = useState(meta.pagination.current_page)
+  const [page, setPage] = useState(meta.offset)
   const [loading, setLoading] = useState(false)
   const loadingRef = useRef(false)
   const loader = useRef<HTMLDivElement | null>(null)
   const searchParams = useSearchParams()
   const loadMore = useCallback(async () => {
-    if (loadingRef.current || page >= meta.pagination.total_pages) return
+    if (loadingRef.current || page >= (meta.total / meta.limit)) return
     loadingRef.current = true
     setLoading(true)
     try {
@@ -26,13 +27,13 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
         typeof window !== "undefined"
           ? window.location.origin
           : process.env.NEXT_PUBLIC_BASE_URL!
-      params.page = (page + 1).toString();
-      const data_url =buildQuery(params, new URL(`${baseUrl}/api/platinumlist/events`))
+      params.offset = (page + 1).toString();
+      const data_url =buildQuery(params, new URL(`${baseUrl}/api/mediastack/dubai`))
       const res = await fetch(data_url)
       const data = await res.json()
       startTransition(() => {
         setEvents(prev => [...prev, ...data.data])
-        setPage(data.meta.pagination.current_page)
+        setPage(data.meta.offset)
       })
     } catch (error) {
       console.error(error)
@@ -40,7 +41,7 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
       loadingRef.current = false
       setLoading(false)
     }
-  }, [page, meta.pagination.total_pages, meta.pagination.per_page])
+  }, [page, meta.total, meta.limit])
 
   useEffect(() => {
     if (!loader.current) return
@@ -53,13 +54,8 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
 
   return (
     <>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-2">All Upcoming Events</h2>
-        <p className="text-muted-foreground">Browse our complete collection of exclusive Dubai events</p>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map(event => <EventCard key={event.id} event={event} />)}
+        {events.filter(n=> n.image !== null).map(news => <NewsCard key={news.url} news={news} />)}
       </div>
 
       <div ref={loader} className="py-10 text-center">

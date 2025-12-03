@@ -1,4 +1,3 @@
-import { pagination } from "@/utils/supabase_pagination";
 import z from "zod";
 
 
@@ -21,8 +20,9 @@ export const MediaStackPagination = z.object({
   total: z.number().int().positive(),
 });
 export const MediaStackReturnData = z.object({
-  pagination: pagination,
+  pagination: MediaStackPagination,
   data: z.array(NewsArticle),
 })
 export type NewsArticle = z.infer<typeof NewsArticle>;
 export type MediaStackReturnData = z.infer<typeof MediaStackReturnData>;
+export type MediaStackPagination = z.infer<typeof MediaStackPagination>;
