@@ -4,18 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { formatAED } from '@/repository/public/crypto'
 import {
-  Bitcoin,
-  Bed,
-  Bath,
-  Maximize,
-  MapPin,
-  Building2,
-  Check,
   ArrowLeft,
-  MessageCircle,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/stores'
@@ -31,7 +21,7 @@ export default function PropertyDetailPage() {
     if (!selectedArticle) router.replace('/news');
   }, [selectedArticle, router]);
 
-  if (!selectedArticle) return null;
+  if (!selectedArticle) return notFound();
   return (
 
     <div className="min-h-screen py-12">
@@ -75,14 +65,10 @@ export default function PropertyDetailPage() {
                     <h3 className="font-semibold text-lg mb-3">Description</h3>
                     <p className="text-muted-foreground">{selectedArticle.description}</p>
                   </div>
-
                 </CardContent>
               </Card>
             </div>
-
           </div>
-
-
         </div>
       </div>
     </div>
