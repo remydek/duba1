@@ -1,15 +1,20 @@
+'use client'
 import Image from 'next/image'
 import { Calendar } from 'lucide-react'
-import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { selectArticle } from '@/stores/slices/news-slice'
+import { useRouter } from 'next/navigation'
 import { NewsArticle } from '@/schemas/news'
+
 interface NewsCardProps {
   news: NewsArticle
 }
 
 export function NewsCard({ news }: NewsCardProps) {
+  const router = useRouter()
+  const dispatch = useDispatch()
 
   const newsDate = new Date(news.published_at)
   const formattedDate = newsDate.toLocaleDateString('en-US', {
@@ -24,18 +29,25 @@ export function NewsCard({ news }: NewsCardProps) {
   })
 
   function createMarkup() {
-    return { __html: news.description || '' };
+    return { __html: news.description || '' }
   }
+
+  function handleCardClick() {
+    dispatch(selectArticle(news)) // store the clicked article
+    router.push('/news/detailed') // navigate to detail page
+  }
+
   return (
-    <Card className="overflow-hidden hover:border-primary transition-colors group p-0">
+    <Card
+      onClick={handleCardClick}
+      className="overflow-hidden hover:border-primary transition-colors group p-0 cursor-pointer"
+    >
       <div className="relative h-64 w-full overflow-hidden bg-muted">
         <Image
           src={
             typeof news.image === 'string'
               ? news.image
-              : Array.isArray(news.image) && (news.image as string[]).length
-                ? news.image[0]
-                : 'https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg'
+              : 'https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg'
           }
           alt={news.title}
           fill
@@ -45,7 +57,7 @@ export function NewsCard({ news }: NewsCardProps) {
         />
         {news.category && (
           <Badge className="absolute top-3 right-3 bg-primary/90 backdrop-blur-sm">
-            {news.category && news.category.toUpperCase()}
+            {news.category.toUpperCase()}
           </Badge>
         )}
         {news.source && (
@@ -65,19 +77,13 @@ export function NewsCard({ news }: NewsCardProps) {
             <Calendar className="h-4 w-4" />
             <span>{formattedDate} at {formattedTime}</span>
           </div>
-
         </div>
 
-        <div className="text-sm text-muted-foreground line-clamp-6 mb-4" dangerouslySetInnerHTML={createMarkup()} />
+        <div
+          className="text-sm text-muted-foreground line-clamp-6 mb-4"
+          dangerouslySetInnerHTML={createMarkup()}
+        />
       </CardContent>
-
-      <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <Link href={`${news.url}`} target='_blank' className="text-primary hover:underline">
-          <Button size="sm" className='cursor-pointer hover:bg-amber-600'>
-            View Full Article
-          </Button>
-        </Link>
-      </CardFooter>
     </Card>
   )
 }

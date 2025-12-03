@@ -2,8 +2,7 @@
 import { useState, useEffect, useRef, startTransition, useCallback } from 'react'
 import { NewsCard } from '@/components/NewsCard'
 import { MediaStackPagination, NewsArticle } from '@/schemas/news'
-import { MediaStackFirstKey } from '@/interface/mediastack_query_params'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { buildQuery } from '@/utils/utils'
 
 
@@ -41,7 +40,7 @@ export default function AllNewsClient({ initial, meta }: { initial: NewsArticle[
       loadingRef.current = false
       setLoading(false)
     }
-  }, [page, meta.total, meta.limit])
+  }, [page, meta.total, meta.limit, searchParams])
 
   useEffect(() => {
     if (!loader.current) return

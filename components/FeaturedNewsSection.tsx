@@ -1,11 +1,12 @@
 
+
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import type { CoinGeckoData } from '@/repository/public/coingecko'
-import { NewsCard } from './NewsCard'
 import { NewsArticle } from '@/schemas/news'
+import { FeaturedNewsSectionWrapper } from './FeaturedNewsSectionWrapper'
 
 interface FeaturedNewsSectionProps {
   news: NewsArticle[]
@@ -32,9 +33,7 @@ export function FeaturedNewsSection({ news, coins }: FeaturedNewsSectionProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featured_news.map((news) => (
-              <NewsCard key={news.url} news={news} />
-            ))}
+            <FeaturedNewsSectionWrapper news={featured_news} />
           </div>
         </div>
       </section>

@@ -134,6 +134,7 @@ export default async function HomePage() {
       </section> */}
 
       {/* Featured News */}
+      
       { featuredNews.length > 0 && <FeaturedNewsSection news={featuredNews} coins={coins} />}
       {/* Featured Events */}
       { featuredEvents.length > 0 && <FeaturedEventsSection events={featuredEvents} coins={coins} />}
