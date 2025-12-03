@@ -55,16 +55,18 @@ export default function PropertyDetailPage() {
               </div>
               <Card className='flex-1'>
                 <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h1 className="text-3xl font-bold mb-2">{selectedArticle.title}</h1>
+                  <article>
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h1 className="text-3xl font-bold mb-2">{selectedArticle.title}</h1>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="mt-6">
-                    <h3 className="font-semibold text-lg mb-3">Description</h3>
-                    <p className="text-muted-foreground">{selectedArticle.description}</p>
-                  </div>
+                    <div className="mt-6">
+                      <h3 className="font-semibold text-lg mb-3">Description</h3>
+                      <p className="text-muted-foreground">{selectedArticle.description}</p>
+                    </div>
+                  </article>
                 </CardContent>
               </Card>
             </div>
