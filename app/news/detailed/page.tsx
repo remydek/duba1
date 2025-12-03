@@ -37,7 +37,7 @@ export default function PropertyDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="flex">
+            <div className="flex gap-4">
               <div className="flex-none w-1/3 grid grid-cols-2 gap-4">
                 {selectedArticle.image && selectedArticle.image && (
                   <div className="col-span-2 relative h-[500px] rounded-xl overflow-hidden">
@@ -53,7 +53,7 @@ export default function PropertyDetailPage() {
                 )}
 
               </div>
-              <Card className='flex-1' >
+              <Card className='flex-1'>
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div>
