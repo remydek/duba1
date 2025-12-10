@@ -4,6 +4,7 @@ model news_articles {
   title        String
   slug         String   @unique
   description  String? 
+  ai_title    String?
   ai_generated_summary String?
   ai_description       String?
   url          String   @unique
