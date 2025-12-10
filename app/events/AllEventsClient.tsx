@@ -40,7 +40,7 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
       loadingRef.current = false
       setLoading(false)
     }
-  }, [page, meta.pagination.total_pages, meta.pagination.per_page])
+  }, [page, meta.pagination.total_pages, searchParams])
 
   useEffect(() => {
     if (!loader.current) return
