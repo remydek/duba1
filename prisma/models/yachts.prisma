@@ -1,0 +1,15 @@
+model yachts {
+  id                String    @unique @id @default(uuid())
+  name              String
+  description       String?
+  price_per_day_aed Decimal   @db.Decimal
+  length_ft         Int?
+  guests_max        Int?
+  yacht_type        String?
+  images            String[]  @default([])
+  amenities         String[]  @default([])
+  whatsapp_booking  String?
+  created_at        DateTime? @default(now()) @db.Timestamp(6)
+
+  @@index([price_per_day_aed], map: "idx_yachts_price")
+}

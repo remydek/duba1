@@ -1,0 +1,13 @@
+model supercars {
+  id                String    @unique @id @default(uuid())
+  brand             String
+  model             String
+  year              Int?
+  price_per_day_aed Decimal   @db.Decimal
+  images            String[]  @default([])
+  specs             Json?
+  whatsapp_booking  String?
+  created_at        DateTime? @default(now()) @db.Timestamp(6)
+
+  @@index([price_per_day_aed], map: "idx_supercars_price")
+}

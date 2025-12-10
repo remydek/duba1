@@ -1,0 +1,26 @@
+model properties {
+  id                   String    @unique @id @default(uuid())
+  title                String
+  description          String?
+  price_aed            Decimal   @db.Decimal
+  property_type        String?
+  bedrooms             Int?
+  bathrooms            Int?
+  sqft                 Int?
+  area                 String?
+  developer            String?
+  crypto_verified      Boolean?  @default(false)
+  golden_visa_eligible Boolean?  @default(false)
+  images               String[]  @default([])
+  amenities            String[]  @default([])
+  status               String?   @default("available")
+  latitude             Decimal?  @db.Decimal
+  longitude            Decimal?  @db.Decimal
+  created_at           DateTime? @default(now()) @db.Timestamp(6)
+
+  @@index([area], map: "idx_properties_area")
+  @@index([crypto_verified], map: "idx_properties_crypto_verified")
+  @@index([price_aed], map: "idx_properties_price")
+  @@index([status], map: "idx_properties_status")
+  @@index([property_type], map: "idx_properties_type")
+}

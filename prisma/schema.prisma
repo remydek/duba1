@@ -1,0 +1,29 @@
+generator client {
+  provider     = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+model crypto_prices {
+  currency   String    @id @unique
+  price_aed  Decimal   @db.Decimal
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model leads {
+  id            String    @unique @id @default(uuid())
+  name          String
+  email         String?
+  whatsapp      String
+  interest_type String[]  @default([])
+  budget_max    Decimal?  @db.Decimal
+  message       String?
+  status        String?   @default("new")
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+
+  @@index([created_at], map: "idx_leads_created")
+  @@index([status], map: "idx_leads_status")
+}
