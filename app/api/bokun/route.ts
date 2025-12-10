@@ -7,6 +7,6 @@ export async function GET(req: NextRequest) {
   const url = params.get('url')
   const service = new BokunPrivateService()
 
-  const experience = await service.getFeaturedExperiences()
+  const experience = await service.getFeatured()
   return NextResponse.json(experience) 
 }

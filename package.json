@@ -43,6 +43,7 @@
     "@tailwindcss/postcss": "^4",
     "@types/lodash.debounce": "^4.0.9",
     "@types/luxon": "^3.7.1",
+    "@types/next": "^8.0.7",
     "@types/node": "^20",
     "@types/pg": "^8.15.6",
     "@types/react": "^19",

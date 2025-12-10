@@ -28,8 +28,8 @@ export default async function EventsPage({
   const eventService = new PlatinumListService()
 
   const [{ data: allEventsData, meta: allEventsMeta }, { data: todayEvent }, coins] = await Promise.all([
-    eventService.getEvents(Object.keys(await searchParams).length ? await searchParams : undefined),
-    eventService.getEvents(),
+    eventService.getData(Object.keys(await searchParams).length ? await searchParams : undefined),
+    eventService.getData(),
     getCoins()
   ])
 

@@ -4,12 +4,13 @@ import { PlatinumlistQueryParams } from "@/interface/platinumlist_query_params";
 import { PlatinumListPrivateRepo } from "@/repository/private/platinumListPrivateRepo";
 import { PlatinumlistMeta } from "@/schemas/platinumlist-events";
 import type { Event } from "@/schemas/event";
+import { BasePrivateServiceInterface } from "@/interface/service_interface";
 
 
-export class PlatinumListService {
+export class PlatinumListService implements BasePrivateServiceInterface<{ data: Event[], count?: number, meta?: PlatinumlistMeta }> {
   constructor(private repo: PlatinumListPrivateRepo = new PlatinumListPrivateRepo()) { }
 
-  async getEvents(params: PlatinumlistQueryParams = platinum_list_params): Promise<{ data: Event[], count?: number, meta?: PlatinumlistMeta }> {
+  async getData(params: PlatinumlistQueryParams = platinum_list_params): Promise<{ data: Event[], count?: number, meta?: PlatinumlistMeta }> {
     const raw = await this.repo.getPlatinumListEvents(params);
     if (raw.error) {
       return {

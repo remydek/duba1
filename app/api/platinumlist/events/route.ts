@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const params = Object.fromEntries(url.searchParams.entries());
 
-  const data = await service.getEvents({
+  const data = await service.getData({
     search: params.search,
     has_tickets: params.has_tickets,
     start_from: params.start_from ? Number(params.start_from) : Date.now() / 1000,
