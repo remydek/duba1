@@ -8,6 +8,8 @@ import { ApiParamSearchMinMax } from '@/components/ApiParamSearchMinMax'
 import AllEventsClient from '../events/AllEventsClient'
 import { BokunPrivateService } from '@/services/private/BokunPrivateService'
 import { ExperiencesClient } from '../experiences/ExperiencesClient'
+import { PlatinumlistFirstKey, PlatinumlistQueryParams } from '@/interface/platinumlist_query_params'
+import { platinum_list_params } from '@/constants/parameters/platinumlist_events'
 async function getCoins() {
   try {
     return await getTopCoins()
@@ -31,7 +33,7 @@ export default async function EventsPage({
   const [{ data: allEventsData, meta: allEventsMeta }, coins, experience] = await Promise.all([
     eventService.getData(Object.keys(await searchParams).length ? await searchParams : undefined),
     getCoins(),
-    bokunPrivateService.getData(),
+    bokunPrivateService.getFeatured(),
   ])
 
   const defaultCoin = coins.find(c => c.symbol === 'btc') || coins[0] || null
@@ -75,7 +77,7 @@ export default async function EventsPage({
             </TabsContent>
 
             <TabsContent value="events">
-              <ApiParamSearchMinMax coins={coins} >
+              <ApiParamSearchMinMax<PlatinumlistQueryParams> coins={coins} params={platinum_list_params} search_key={PlatinumlistFirstKey} >
                 <AllEventsClient initial={allEventsData} meta={allEventsMeta} />
               </ApiParamSearchMinMax>
             </TabsContent>

@@ -7,6 +7,8 @@ import { CurrencyProvider } from '@/contexts/CurrencyContext'
 
 import { getTopCoins } from '@/repository/public/coingecko'
 import { ApiParamSearchMinMax } from '@/components/ApiParamSearchMinMax'
+import { platinum_list_params } from '@/constants/parameters/platinumlist_events'
+import { PlatinumlistFirstKey, PlatinumlistQueryParams } from '@/interface/platinumlist_query_params'
 async function getCoins() {
   try {
     return await getTopCoins()
@@ -116,7 +118,7 @@ export default async function EventsPage({
             </TabsContent>
 
             <TabsContent value="all">
-              <ApiParamSearchMinMax coins={coins} >
+              <ApiParamSearchMinMax<PlatinumlistQueryParams> coins={coins} params={platinum_list_params} search_key={PlatinumlistFirstKey} >
               <AllEventsClient initial={allEventsData} meta={allEventsMeta} />
               </ApiParamSearchMinMax>
             </TabsContent>

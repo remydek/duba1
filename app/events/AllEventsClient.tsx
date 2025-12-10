@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef, startTransition, useCallback } from 'react'
 import { EventCard } from '@/components/EventCard'
 import type { Event } from '@/schemas/event'
+import { useSearchParams } from 'next/navigation'
+import { buildQuery } from '@/utils/utils'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 export default function AllEventsClient({ initial, meta }: { initial: Event[], meta: any }) {
@@ -10,13 +12,23 @@ export default function AllEventsClient({ initial, meta }: { initial: Event[], m
   const [loading, setLoading] = useState(false)
   const loadingRef = useRef(false)
   const loader = useRef<HTMLDivElement | null>(null)
-
+  const searchParams = useSearchParams()
   const loadMore = useCallback(async () => {
     if (loadingRef.current || page >= meta.pagination.total_pages) return
     loadingRef.current = true
     setLoading(true)
     try {
-      const res = await fetch(`/api/platinumlist/events?page=${page + 1}&per_page=${meta.pagination.per_page}`)
+      const params: Record<string, string> = {};
+        searchParams.forEach((value, key) => {
+          params[key] = value;
+        });
+      const baseUrl =
+        typeof window !== "undefined"
+          ? window.location.origin
+          : process.env.NEXT_PUBLIC_BASE_URL!
+      params.page = (page + 1).toString();
+      const data_url =buildQuery(params, new URL(`${baseUrl}/api/platinumlist/events`))
+      const res = await fetch(data_url)
       const data = await res.json()
       startTransition(() => {
         setEvents(prev => [...prev, ...data.data])

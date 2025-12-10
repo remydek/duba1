@@ -15,13 +15,14 @@ export function Navbar() {
   const navLinks = [
     { href: '/events', label: 'Events' },
     { href: '/experiences', label: 'Experiences' },
+    { href: '/news', label: 'News' },
     // { href: '/properties', label: 'Properties' },
     // { href: '/supercars', label: 'Supercars' },
     // { href: '/yachts', label: 'Yachts' },
   ]
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-primary/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-[0_0_30px_-5px_rgba(212,175,55,0.3)]">
+    <nav className="sticky top-0 z-50 border-b border-primary/20 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 shadow-[0_0_30px_-5px_rgba(212,175,55,0.3)]">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
