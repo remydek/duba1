@@ -12,7 +12,7 @@ export class MediaStackPrivateRepo {
       const res = await fetch(url, {
         cache: "force-cache",
         next: {
-          revalidate: 21600, // 6 hours
+          revalidate: 1800, // 30 minutes
         },
       },);
       return res.json();
