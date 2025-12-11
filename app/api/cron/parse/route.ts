@@ -3,34 +3,24 @@ import { MediaStackPrivateService } from "@/services/private/MediaStackPrivateSe
 import { Client } from "@upstash/qstash";
 
 const service = new MediaStackPrivateService();
-
 const qstash = new Client({
   baseUrl: process.env.QSTASH_URL!,
   token: process.env.QSTASH_TOKEN!,
-})
+});
 
 export async function GET(req: Request) {
-  // if (req.headers.get("Authorization") !== process.env.CRON_API_KEY) {
-  //   return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
-  // }
-
   const today = new Date().toISOString().split("T")[0];
   const params = { ...mediastack_news_params, limit: 100, date: today };
   const data = await service.getData(params);
-  const news_data = data.data;
   const host = req.headers.get("host");
   const protocol = req.headers.get("x-forwarded-proto") ?? "http";
   const baseUrl = `${protocol}://${host}`;
-  console.log(baseUrl);
-  for (const news of news_data) {
+  for (const news of data.data) {
     await qstash.publishJSON({
-      url: `${baseUrl}/api/news/process`,
+      url: "${baseUrl}/api/processors/news",
       body: news,
     });
   }
 
-  return new Response(
-    JSON.stringify({ message: "Enqueued news articles", count: news_data.length }),
-    { status: 200 }
-  );
+  return new Response(JSON.stringify({ message: "Enqueued news articles", count: data.data.length }), { status: 200 });
 }

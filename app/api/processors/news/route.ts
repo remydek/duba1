@@ -1,10 +1,10 @@
+import { verifySignatureAppRouter } from "@upstash/qstash/nextjs";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/utils/prisma";
 import slugify from "slugify";
 import { generateAIText } from "@/utils/generate_ai";
-import { NextResponse } from "next/server";
-import { verifySignatureAppRouter } from "@upstash/qstash/nextjs";
 
-export async function handler(req: Request) {
+async function handler(req: NextRequest) {
   const news = await req.json();
 
   const existing = await prisma.news_articles.findUnique({
