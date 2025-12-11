@@ -12,7 +12,8 @@ export async function GET(req: Request): Promise<NextResponse> {
   if (req.headers.get("Authorization") !== process.env.CRON_API_KEY) {
     return NextResponse.json({ message: "Unauthorized", status: 401 });
   }
-  const params = { ...mediastack_news_params, limit: 100 };
+  const today = new Date().toISOString().split("T")[0];
+  const params = { ...mediastack_news_params, limit: 100, date: today };
   const data = await service.getData(params);
   const news_data = data.data;
 
@@ -45,23 +46,22 @@ export async function GET(req: Request): Promise<NextResponse> {
     if (!aiDescription || !aiSummary || !aiTitle) {
       const [desc, summary, title] = await Promise.all([
         generateAIText(
-          `Rewrite the following news article into a detailed, engaging, and factually accurate English description. Make it dense and informative, suitable for a detailed article page. OUTPUT ONLY the description text:\nTitle: ${
-            news.title
-          }\nDescription: ${news.description ?? ""}`
+          "Rewrite the following news article into a detailed, engaging, and factually accurate English description. Make it dense and informative, suitable for a detailed article page. OUTPUT ONLY the description text",
+          `\nTitle: ${news.title}\nDescription: ${news.description ?? ""}`
         ),
         generateAIText(
-          `Write a concise summary (2-3 sentences) of the news article in English. OUTPUT ONLY the summary:\nTitle: ${
-            news.title
-          }\nDescription: ${news.description ?? ""}`
+          "Write a concise summary (2-3 sentences) of the news article in English. OUTPUT ONLY the summary",
+          `\nTitle: ${news.title}\nDescription: ${news.description ?? ""}`
         ),
         generateAIText(
-          `Translate the title into English if needed. OUTPUT ONLY the title text:\nTitle: ${news.title}`
+          "Translate the title into English if needed. OUTPUT ONLY the title text",
+          `\nTitle: ${news.title}`
         ),
       ]);
 
-      aiDescription = desc.text ?? "";
-      aiSummary = summary.text ?? "";
-      aiTitle = title.text ?? "";
+      aiDescription = desc ?? "";
+      aiSummary = summary ?? "";
+      aiTitle = title ?? "";
     }
 
     let slug = existing?.slug ?? slugify(news.title, { lower: true });
