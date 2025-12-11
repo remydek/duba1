@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   const baseUrl = `${protocol}://${host}`;
   for (const news of data.data) {
     await qstash.publishJSON({
-      url: "${baseUrl}/api/processors/news",
+      url: `${baseUrl}/api/processors/news`,
       body: news,
     });
   }
