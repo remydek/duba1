@@ -3,7 +3,11 @@ import { MediaStackPrivateService } from "@/services/private/MediaStackPrivateSe
 import { Client } from "@upstash/qstash";
 
 const service = new MediaStackPrivateService();
-const qstash = new Client({ token: process.env.QSTASH_TOKEN! });
+
+const qstash = new Client({
+  baseUrl: process.env.QSTASH_URL!,
+  token: process.env.QSTASH_TOKEN!,
+})
 
 export async function GET(req: Request) {
   // if (req.headers.get("Authorization") !== process.env.CRON_API_KEY) {
