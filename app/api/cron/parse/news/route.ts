@@ -9,18 +9,21 @@ const qstash = new Client({
 });
 
 export async function GET(req: Request) {
-  if (req.headers.get("Authorization") !== process.env.CRON_API_KEY) {
-    return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
-  }
+  // if (req.headers.get("Authorization") !== process.env.CRON_API_KEY) {
+  //   return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
+  // }
   const today = new Date().toISOString().split("T")[0];
   const params = { ...mediastack_news_params, limit: 100, date: today };
   const data = await service.getData(params);
-  const host = req.headers.get("host");
-  const protocol = req.headers.get("x-forwarded-proto") ?? "http";
-  const baseUrl = `${protocol}://${host}`;
+  let baseUrl = process.env.BASE_URL;
+  if (baseUrl === undefined) {
+      const host = req.headers.get("host");
+      const protocol = req.headers.get("x-forwarded-proto") ?? "http";
+      baseUrl = `${protocol}://${host}`;
+  }
   for (const news of data.data) {
     await qstash.publishJSON({
-      url: `https://www.duba1.com/api/processors/news`,
+      url: `${baseUrl}/api/processors/news`,
       body: news,
     });
   }
