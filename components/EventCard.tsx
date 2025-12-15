@@ -24,13 +24,13 @@ export function EventCard({ event }: EventCardProps) {
     minute: '2-digit'
   })
 
-  const priceFormatted = typeof event.price_aed === 'string'
-    ? event.price_aed
-    : new Intl.NumberFormat('en-AE', {
-      style: 'currency',
-      currency: 'AED',
-      minimumFractionDigits: 0,
-    }).format(event.price_aed)
+  // const priceFormatted = typeof event.price_aed === 'string'
+  //   ? event.price_aed
+  //   : new Intl.NumberFormat('en-AE', {
+  //     style: 'currency',
+  //     currency: 'AED',
+  //     minimumFractionDigits: 0,
+  //   }).format(event.price_aed)
   function createMarkup() {
     return { __html: event.description || '' };
   }

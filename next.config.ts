@@ -4,24 +4,16 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
+        protocol: "https",
+        hostname: "**",
+        port: "",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname: 'assets.coingecko.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'coin-images.coingecko.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.platinumlist.net',
-      },
-      {
-        protocol: 'https',
-        hostname: 'bokun.s3.amazonaws.com',
+        protocol: "http",
+        hostname: "**",
+        port: "",
+        pathname: "**",
       },
     ],
   },

@@ -8,14 +8,18 @@ import { Search } from 'lucide-react'
 import { Button } from './ui/button'
 import { useEffect, useState } from 'react'
 import { CoinGeckoData } from '@/repository/public/coingecko'
-import { platinum_list_params } from '@/constants/parameters/platinumlist_events'
 
-export function ApiParamSearchMinMax({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function ApiParamSearchMinMax<T extends Record<string, any>>({
     children,
-    coins
+    coins,
+    params,
+    search_key,
 }: {
     children: React.ReactNode
     coins: CoinGeckoData[]
+    params: T
+    search_key: string
 }) {
     const defaultCoin = coins.find(c => c.symbol === 'btc') || coins[0]
     const [searchInput, setSearchInput] = useState('')
@@ -23,21 +27,19 @@ export function ApiParamSearchMinMax({
     useEffect(() => {
         if (typeof window === 'undefined') return
         const urlParams = new URLSearchParams(window.location.search)
-        const searchParam = urlParams.get('search')
+        const searchParam = urlParams.get(search_key)
         if (searchParam) setSearchInput(searchParam)
-    }, [])
+    }, [search_key])
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (typeof window === 'undefined') return
 
         const url = new URL(window.location.href)
-        url.searchParams.set('search', searchInput)
-
-        Object.entries(platinum_list_params).forEach(([key, value]) => {
+        Object.entries(params).forEach(([key, value]) => {
             url.searchParams.set(key, String(value))
         })
-
+        url.searchParams.set(search_key, searchInput)
         window.location.assign(url.toString())
     }
     return (
@@ -62,7 +64,7 @@ export function ApiParamSearchMinMax({
                                         <div className="flex items-center gap-2 rounded-lg px-3 py-2 border grid-cols-3">
                                             <Search className="h-4 w-4" />
                                             <Input
-                                                placeholder="Search experience..."
+                                                placeholder="Search..."
                                                 value={searchInput}
                                                 onChange={(e) => setSearchInput(e.target.value)}
                                                 className="border-0 px-0"
@@ -82,3 +84,4 @@ export function ApiParamSearchMinMax({
         </CurrencyProvider>
     )
 }
+

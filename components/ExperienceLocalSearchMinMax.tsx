@@ -21,10 +21,15 @@ export function LocalSearchMinMax({ children, experience, coins }: {
     const [query, setQuery] = useState('')
     const [minBudget, setMinBudget] = useState<number | ''>('')
     const [maxBudget, setMaxBudget] = useState<number | ''>('')
+
     const debounceSetQuery = useMemo(
         () => debounce((value: string) => setQuery(value), 500),
         []
     )
+    const handleSearch = (value: string) => {
+        setSearch(value)
+        debounceSetQuery(value)
+    }
     useEffect(() => {
         if (typeof window === 'undefined') return
         const urlParams = new URLSearchParams(window.location.search)
@@ -35,12 +40,6 @@ export function LocalSearchMinMax({ children, experience, coins }: {
         }
             
     }, [debounceSetQuery])
-
-
-    const handleSearch = (value: string) => {
-        setSearch(value)
-        debounceSetQuery(value)
-    }
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase()

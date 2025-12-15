@@ -13,7 +13,8 @@ interface FeaturedEventsSectionProps {
 }
 
 export function FeaturedEventsSection({ events, coins }: FeaturedEventsSectionProps) {
-  const defaultCoin = coins.find(c => c.symbol === 'btc') || coins[0] || null
+  const featured_events: Event[] = events.filter((event: Event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)
+  const defaultCoin: CoinGeckoData = coins.find((c: CoinGeckoData) => c.symbol === 'btc') || coins[0] || null
   return (
     <CurrencyProvider defaultCoin={defaultCoin}>
       <section className="py-16 bg-secondary/20">
@@ -31,7 +32,7 @@ export function FeaturedEventsSection({ events, coins }: FeaturedEventsSectionPr
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
+            {featured_events.map((event: Event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>

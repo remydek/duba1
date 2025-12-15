@@ -1,10 +1,12 @@
 import { FeaturedEventsSection } from '@/components/FeaturedEventsSection'
 import { FeaturedExperienceSection } from '@/components/FeaturedExperienceSection'
+import { FeaturedNewsSection } from '@/components/FeaturedNewsSection'
 import { HeroCalculator } from '@/components/HeroCalculator'
 import { HeroSlideshow } from '@/components/HeroSlideshow'
 import HomepageSearchClient from '@/components/HomepageSearchClient'
 import { getTopCoins } from '@/repository/public/coingecko'
 import { BokunPrivateService } from '@/services/private/BokunPrivateService'
+import { MediaStackPrivateService } from '@/services/private/MediaStackPrivateService'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 import { Badge, Bitcoin} from 'lucide-react'
 // import { PropertyPublicService } from '@/services/public/properties'
@@ -23,16 +25,16 @@ async function getCoins() {
 export default async function HomePage() {
   const eventPlatinumListPrivateService = new PlatinumListService()
   const experiencebokunPrivateService = new BokunPrivateService()
-
+  const experienceMediaStackPrivateService = new MediaStackPrivateService()
+  // Disabled Temporarily Unused
   // const propertyPublicService = new PropertyPublicService()
   // const supercarPublicService = new SupercarPublicService()
   // const yachtPublicService = new YachtPublicService()
-  const [{ data: featuredEvents }, featuredExperiences, coins] = await Promise.all([
+  const [{ data: featuredEvents }, featuredExperiences, {data: featuredNews}, coins] = await Promise.all([
     // propertyPublicService.getFeaturedProperties(),
     eventPlatinumListPrivateService.getData(),
     experiencebokunPrivateService.getFeatured(),
-    // supercarPublicService.getFeaturedSupercars(),
-    // yachtPublicService.getFeaturedYachts(),
+    experienceMediaStackPrivateService.getData(),
     getCoins()
   ])
 
@@ -131,8 +133,11 @@ export default async function HomePage() {
         </div>
       </section> */}
 
+      {/* Featured News */}
+      
+      { featuredNews.length > 0 && <FeaturedNewsSection news={featuredNews} coins={coins} />}
       {/* Featured Events */}
-      {<FeaturedEventsSection events={featuredEvents.filter((event) => event.category === 'featured' || event.category === 'top seller').slice(0, 3)} coins={coins} />}
+      { featuredEvents.length > 0 && <FeaturedEventsSection events={featuredEvents} coins={coins} />}
       {/* Featured Experiences */}
       { featuredExperiences.length > 0 && <FeaturedExperienceSection experiences={featuredExperiences} coins={coins} /> }
 
