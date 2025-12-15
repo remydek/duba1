@@ -10,7 +10,10 @@ const qstash = new Client({
 
 export async function GET(req: Request) {
   if (req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new Response(null, { status: 401 })
+    return Response.json({
+      header: req.headers.get("authorization"),
+      env: process.env.CRON_SECRET ? "present" : "missing"
+    })
   }
 
   const today = new Date().toISOString().slice(0, 10)
