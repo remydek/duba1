@@ -12,7 +12,6 @@ const qstash = new Client({
 export async function GET(req: Request) {
   if (req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
     return Response.json({
-      header: req.headers.get("authorization"),
       env: process.env.CRON_SECRET ? "present" : "missing",
       status: 401
     })
