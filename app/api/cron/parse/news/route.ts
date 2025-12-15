@@ -9,8 +9,11 @@ const qstash = new Client({
 });
 
 export async function GET(req: Request) {
-  if (req.headers.get("Authorization") !== process.env.CRON_API_KEY) {
-    return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
+  const authHeader = req.headers.get('authorization');
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new Response('Unauthorized', {
+      status: 401,
+    });
   }
   const today = new Date().toISOString().split("T")[0];
   const params = { ...mediastack_news_params, limit: 100, date: today };
