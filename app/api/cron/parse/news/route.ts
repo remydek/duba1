@@ -1,6 +1,7 @@
 import { mediastack_news_params } from "@/constants/parameters/mediastack_news"
 import { MediaStackPrivateService } from "@/services/private/MediaStackPrivateService"
 import { Client } from "@upstash/qstash"
+import { success } from "zod"
 
 const service = new MediaStackPrivateService()
 const qstash = new Client({
@@ -12,7 +13,8 @@ export async function GET(req: Request) {
   if (req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
     return Response.json({
       header: req.headers.get("authorization"),
-      env: process.env.CRON_SECRET ? "present" : "missing"
+      env: process.env.CRON_SECRET ? "present" : "missing",
+      status: 401
     })
   }
 
@@ -38,6 +40,7 @@ export async function GET(req: Request) {
 
   return Response.json({
     message: "Enqueued news articles",
-    count: data.data.length
+    count: data.data.length,
+    success: true
   })
 }
