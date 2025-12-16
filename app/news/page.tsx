@@ -7,6 +7,7 @@ import { ApiParamSearchMinMax } from '@/components/ApiParamSearchMinMax'
 import { MediaStackPrivateService } from '@/services/private/MediaStackPrivateService'
 import AllNewsClient from './AllNewsClient'
 import { mediastack_news_params } from '@/constants/parameters/mediastack_news'
+import { NewsArticlePrisma } from '@/services/private/NewsArticlePrisma'
 async function getCoins() {
   try {
     return await getTopCoins()
@@ -22,9 +23,9 @@ export default async function NewsPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
 
-  const mediaStackPrivateService = new MediaStackPrivateService()
+  const newsArticlePrisma = new NewsArticlePrisma()
   const [{ data: allNewsData, pagination: allNewsMeta }, coins] = await Promise.all([
-    mediaStackPrivateService.getData(Object.keys(await searchParams).length ? await searchParams : undefined),
+    newsArticlePrisma.getData(Object.keys(await searchParams).length ? await searchParams : undefined),
     getCoins()
   ])
   const defaultCoin = coins.find(c => c.symbol === 'btc') || coins[0] || null

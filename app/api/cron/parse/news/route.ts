@@ -1,26 +1,27 @@
 import { mediastack_news_params } from "@/constants/parameters/mediastack_news"
 import { MediaStackPrivateService } from "@/services/private/MediaStackPrivateService"
 import { Client } from "@upstash/qstash"
-import { success } from "zod"
-
 const service = new MediaStackPrivateService()
 const qstash = new Client({
   baseUrl: process.env.QSTASH_URL!,
   token: process.env.QSTASH_TOKEN!
 })
+// Posponse queue too slow
+// const queue = qstash.queue({
+//   queueName: "my-queue"
+// })
 
 export async function GET(req: Request) {
-  if (req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
-    return Response.json({
-      env: process.env.CRON_SECRET ? "present" : "missing",
-      status: 401
-    })
-  }
+  // if (req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
+  //   return Response.json({
+  //     env: process.env.CRON_SECRET ? "present" : "missing",
+  //     status: 401
+  //   })
+  // }
 
   const today = new Date().toISOString().slice(0, 10)
-  const params = { ...mediastack_news_params, limit: 100, date: today }
+  const params = { ...mediastack_news_params, limit: 100 }
   const data = await service.getData(params)
-
   let baseUrl = process.env.BASE_URL
   if (!baseUrl) {
     const host = req.headers.get("host")
@@ -29,12 +30,15 @@ export async function GET(req: Request) {
   }
 
   await Promise.all(
-    data.data.map(news =>
+    data.data.map(news =>{
       qstash.publishJSON({
         url: `${baseUrl}/api/processors/news`,
-        body: news
+        body: news,
+        queue: "news"
       })
+    }
     )
+
   )
 
   return Response.json({

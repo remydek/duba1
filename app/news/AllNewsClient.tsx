@@ -6,9 +6,9 @@ import { useSearchParams } from 'next/navigation'
 import { buildQuery } from '@/utils/utils'
 
 
-export default function AllNewsClient({ initial, meta }: { initial: NewsArticle[], meta: MediaStackPagination }) {
-  const [events, setEvents] = useState(initial)
-  const [page, setPage] = useState(meta.offset)
+export default function AllNewsClient({ initial, meta }: { initial: NewsArticle[], meta: { total: number; limit: number; offset: number; page: number; totalPages: number } }) {
+  const [news, setNews] = useState(initial)
+  const [page, setPage] = useState(meta.page)
   const [loading, setLoading] = useState(false)
   const loadingRef = useRef(false)
   const loader = useRef<HTMLDivElement | null>(null)
@@ -26,13 +26,13 @@ export default function AllNewsClient({ initial, meta }: { initial: NewsArticle[
         typeof window !== "undefined"
           ? window.location.origin
           : process.env.NEXT_PUBLIC_BASE_URL!
-      params.offset = (page + 1).toString();
-      const data_url =buildQuery(params, new URL(`${baseUrl}/api/mediastack/dubai`))
+      params.offset = (page * meta.limit).toString();
+      const data_url =buildQuery(params, new URL(`${baseUrl}/api/news_article/dubai`))
       const res = await fetch(data_url)
       const data = await res.json()
       startTransition(() => {
-        setEvents(prev => [...prev, ...data.data])
-        setPage(data.meta.offset)
+        setNews(prev => [...prev, ...data.data.data.filter((  n:NewsArticle)=> n.image !== null)])
+        setPage(page + 1)
       })
     } catch (error) {
       console.error(error)
@@ -54,7 +54,7 @@ export default function AllNewsClient({ initial, meta }: { initial: NewsArticle[
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.filter(n=> n.image !== null).map(news => <NewsCard key={news.url} news={news} />)}
+        {news.filter(n=> n.image !== null).map(news => <NewsCard key={news.url} news={news} />)}
       </div>
 
       <div ref={loader} className="py-10 text-center">

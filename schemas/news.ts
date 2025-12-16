@@ -2,16 +2,22 @@ import z from "zod";
 
 
 export const NewsArticle = z.object({
-  author: z.string(),
+  id: z.string().uuid().optional(),
+  author: z.string().nullable().optional(),
   title: z.string(),
-  description: z.string().nullable(),
+  slug: z.string().optional(),
+  description: z.string().nullable().optional(),
+  ai_title: z.string().nullable().optional(),
+  ai_generated_summary: z.string().nullable().optional(),
+  ai_description: z.string().nullable(),
   url: z.string().url(),
   source: z.string(),
   image: z.nullable(z.string().url()),
   category: z.string(),
   language: z.string(),
   country: z.string(),
-  published_at: z.string().datetime(),
+  published_at: z.date(),
+  created_at: z.date().optional()
 });
 export const MediaStackPagination = z.object({
   limit: z.number().int().positive(),

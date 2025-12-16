@@ -9,7 +9,8 @@
     "lint": "eslint",
     "prisma_generate": "npx prisma generate",
     "prisma_seed": "npx prisma db seed",
-    "prisma_studio": "npx prisma studio"
+    "prisma_studio": "npx prisma studio",
+    "upstash_dev": "npx @upstash/qstash-cli@latest dev"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",

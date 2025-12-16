@@ -7,6 +7,7 @@ import HomepageSearchClient from '@/components/HomepageSearchClient'
 import { getTopCoins } from '@/repository/public/coingecko'
 import { BokunPrivateService } from '@/services/private/BokunPrivateService'
 import { MediaStackPrivateService } from '@/services/private/MediaStackPrivateService'
+import { NewsArticlePrisma } from '@/services/private/NewsArticlePrisma'
 import { PlatinumListService } from '@/services/private/platinumListPrivateService'
 import { Badge, Bitcoin} from 'lucide-react'
 // import { PropertyPublicService } from '@/services/public/properties'
@@ -25,7 +26,7 @@ async function getCoins() {
 export default async function HomePage() {
   const eventPlatinumListPrivateService = new PlatinumListService()
   const experiencebokunPrivateService = new BokunPrivateService()
-  const experienceMediaStackPrivateService = new MediaStackPrivateService()
+  const newsArticlePrisma = new NewsArticlePrisma()
   // Disabled Temporarily Unused
   // const propertyPublicService = new PropertyPublicService()
   // const supercarPublicService = new SupercarPublicService()
@@ -34,7 +35,7 @@ export default async function HomePage() {
     // propertyPublicService.getFeaturedProperties(),
     eventPlatinumListPrivateService.getData(),
     experiencebokunPrivateService.getFeatured(),
-    experienceMediaStackPrivateService.getData(),
+    newsArticlePrisma.getData(),
     getCoins()
   ])
 
