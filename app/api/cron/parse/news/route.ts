@@ -12,15 +12,15 @@ const qstash = new Client({
 // })
 
 export async function GET(req: Request) {
-  // if (req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
-  //   return Response.json({
-  //     env: process.env.CRON_SECRET ? "present" : "missing",
-  //     status: 401
-  //   })
-  // }
+  if (req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
+    return Response.json({
+      env: process.env.CRON_SECRET ? "present" : "missing",
+      status: 401
+    })
+  }
 
   const today = new Date().toISOString().slice(0, 10)
-  const params = { ...mediastack_news_params, limit: 100 }
+  const params = { ...mediastack_news_params, limit: 100, today }
   const data = await service.getData(params)
   let baseUrl = process.env.BASE_URL
   if (!baseUrl) {
