@@ -15,7 +15,6 @@ interface NewsCardProps {
 
 export function NewsCard({ news }: NewsCardProps) {
   const router = useRouter()
-  const dispatch = useDispatch()
   const [mediaVisible, setMediaVisible] = useState(true)
 
   const newsDate = new Date(news.published_at)
@@ -30,12 +29,11 @@ export function NewsCard({ news }: NewsCardProps) {
   })
 
   function createMarkup() {
-    return { __html: news.description || '' }
+    return { __html: news.ai_description || '' }
   }
 
   function handleCardClick() {
-    dispatch(selectArticle(news))
-    router.push('/news/detailed')
+    router.push('/news/'+news.slug)
   }
 
   function isVideo(url: string) {
