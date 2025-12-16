@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ArrowLeft } from 'lucide-react'
 import { prisma } from '@/utils/prisma'
 import Media from './Media'
+import { NewsArticle } from '@/schemas/news'
 
 interface PageProps {
   params: { slug: string }
@@ -12,7 +13,7 @@ interface PageProps {
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params
 
-  const selectedArticle = await prisma.news_articles.findUnique({
+  const selectedArticle: NewsArticle | null = await prisma.news_articles.findUnique({
     where: { slug },
     select: {
       id: true,
