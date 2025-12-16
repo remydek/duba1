@@ -5,8 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Script from "next/script";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import PageViewTracker from "@/components/PageViewTracker";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,7 +43,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XZFJ1PZBZT"
           strategy="afterInteractive"
@@ -70,17 +68,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
-
-// Tracks page views on every route change
-function PageViewTracker() {
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (typeof window.gtag === "function") {
-      window.gtag("config", "G-XZFJ1PZBZT", { page_path: pathname });
-    }
-  }, [pathname]);
-
-  return null;
 }
