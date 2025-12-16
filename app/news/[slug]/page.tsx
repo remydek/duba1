@@ -6,11 +6,7 @@ import { prisma } from '@/utils/prisma'
 import Media from './Media'
 import { NewsArticle } from '@/schemas/news'
 
-interface PageProps {
-  params: { slug: string }
-}
-
-export default async function ArticlePage({ params }: PageProps) {
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
   const selectedArticle: NewsArticle | null = await prisma.news_articles.findUnique({
