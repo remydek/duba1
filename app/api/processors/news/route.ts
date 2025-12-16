@@ -48,12 +48,11 @@ async function handler(req: NextRequest) {
     aiTitle = title ?? "";
   }
 
-  let slug = existing?.slug ?? slugify(news.title, { lower: true });
+  const slug = existing?.slug ?? slugify(news.title, { lower: true });
   if (!existing) {
-    const baseSlug = slug;
-    let counter = 1;
-    while (await prisma.news_articles.findUnique({ where: { slug } })) {
-      slug = `${baseSlug}-${counter++}`;
+    const existingSlug = await prisma.news_articles.findUnique({ where: { slug } });
+    if (existingSlug) {
+        return NextResponse.json({ message: `Already exists: ${news.title}` });
     }
   }
 
